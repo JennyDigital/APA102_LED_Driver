@@ -207,6 +207,7 @@ void APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
 led_frame_st APA_HSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
 {
   led_frame_st rgb_out;
+
   // Convert from RGB to HSV
   //
   hue = (hue * 192) / 256;                        // 0..191
@@ -273,6 +274,10 @@ led_frame_st APA_HSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
   */
 void APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
 {
+#ifdef APA_RANGE_CHECK
+  if ( pixel > MAX_LED ) while( TRUE );
+#endif
+
   led_frame_st rgb_set;
 
   rgb_set = APA_HSVtoRGB( hue, sat, vel );
@@ -295,6 +300,11 @@ void APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sa
   */
 void APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v )
 {
+#ifdef APA_RANGE_CHECK
+  if ( st_pixel > MAX_LED ) while( TRUE )
+  if ( end_pixel > MAX_LED ) while( TRUE );
+#endif
+
   for( uint16_t curr_pixel = st_pixel; curr_pixel <= st_pixel; curr_pixel++ )
   {
     APA_SetPixelHSV( curr_pixel, intensity, h, s, v );
