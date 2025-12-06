@@ -1,10 +1,5 @@
 #include "APA102.h"
 
-#ifdef GD32_SPL
-#define LED_SPI_PORT SPI0
-#endif
-
-
 // Private variables
 //
 static led_frame_st  led_buffer[ LED_BUFF_SZ ];

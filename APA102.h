@@ -15,6 +15,11 @@
 //
 #define APA_RANGE_CHECK
 
+// Set which SPI port you are using (for GD32) here.
+//
+#ifdef GD32_SPL
+#define LED_SPI_PORT SPI0
+#endif
 
 // Highest LED address
 //
