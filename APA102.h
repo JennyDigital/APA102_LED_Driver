@@ -67,6 +67,15 @@ typedef struct
 
 } led_frame_st;
 
+
+// Return status
+//
+typedef enum
+{
+  APA_OK, APA_out_of_range, APA_unknown_err
+} APA_Status_t;
+
+
 // Private functions
 //
 static  void          SPI_BlockSend       ( uint8_t * data, uint16_t length );
@@ -77,14 +86,14 @@ static  void          sendStart           ( void );
 //
         void          APA_Init            ( void );
         void          APA_sendBuffer      ( void );
-        void          APA_SetPixel        ( uint8_t pixel, uint8_t intensity,
+        APA_Status_t  APA_SetPixel        ( uint8_t pixel, uint8_t intensity,
                                             uint8_t red, uint8_t green, uint8_t blue );
-led_frame_st          APA_GetPixel        ( uint16_t pixel_to_get );
-        void          APA_SetRange        ( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
+        APA_Status_t  APA_GetPixel        ( uint16_t pixel_to_get, led_frame_st * pixel_to_return );
+        APA_Status_t  APA_SetRange        ( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
                                             uint8_t red, uint8_t green, uint8_t blue );
         led_frame_st  APA_HSVtoRGB        ( uint8_t hue, uint8_t sat, uint8_t vel );
-        void          APA_SetPixelHSV     ( uint16_t pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v );
-        void          APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel,
-                              uint8_t intensity, uint8_t h, uint8_t s, uint8_t v );
+        APA_Status_t  APA_SetPixelHSV     ( uint16_t pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v );
+        APA_Status_t  APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel,
+                                            uint8_t intensity, uint8_t h, uint8_t s, uint8_t v );
 
 #endif // _APA102_H

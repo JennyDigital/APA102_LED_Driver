@@ -132,35 +132,46 @@ void APA_sendBuffer( void )
   * param: uint8_t red.  The amount of red from 0-255.
   * param: uint8_t green.  The amount of green from 0-255.
   * param: uint8_t blue.  The amount of blue from 0-255.
-  * retval: none
+  * retval: APA_Status_t
   */
-void APA_SetPixel ( uint8_t pixel, uint8_t intensity, uint8_t red, uint8_t green, uint8_t blue  )
+APA_Status_t APA_SetPixel ( uint8_t pixel, uint8_t intensity, uint8_t red, uint8_t green, uint8_t blue  )
 {
 #ifdef APA_RANGE_CHECK
-  if ( pixel > MAX_LED ) while( TRUE );
+  if ( pixel > MAX_LED )
+  {
+    return APA_out_of_range;
+  }
+
 #endif
   led_buffer[pixel].master_bright   = intensity | 0b11100000;
   led_buffer[pixel].red             = red;
   led_buffer[pixel].green           = green;
   led_buffer[pixel].blue            = blue;
+
+  return APA_OK;
 }
 
 
 /** Gets the pixel parameters from the buffer
   *
   * param: pixel address.
-  * retval: none
+  * retval: APA_Status_t
   */
-led_frame_st APA_GetPixel( uint16_t pixel_to_get )
+APA_Status_t APA_GetPixel( uint16_t pixel_to_get, led_frame_st * pixel_to_return )
 {
 #ifdef APA_RANGE_CHECK
-  if ( pixel_to_get > MAX_LED ) while( TRUE );
+  if ( pixel_to_get > MAX_LED  )
+  {
+    return APA_out_of_range;
+  }
 #endif
+
   led_frame_st pixel;
 
-  pixel = led_buffer[ pixel_to_get ];
-  pixel.master_bright &= 0b11111;
-  return pixel;
+  *pixel_to_return = led_buffer[ pixel_to_get ];
+  pixel_to_return->master_bright &= 0b11111;
+
+  return APA_OK;
 }
 
 
@@ -172,15 +183,18 @@ led_frame_st APA_GetPixel( uint16_t pixel_to_get )
   * param: uint8_t red.  The amount of red to use.
   * param: uint8_t green.  The amount of green to use.
   * param: uint8_t blue.  The amount of blue to use.
-  * retval: none.
+  * retval: APA_Status_t.
   */
-void APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
-                   uint8_t red, uint8_t green, uint8_t blue )
+APA_Status_t APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
+                           uint8_t red, uint8_t green, uint8_t blue )
 {
 #ifdef APA_RANGE_CHECK
-  if ( st_pixel > MAX_LED ) while( TRUE );
-  if ( end_pixel > MAX_LED ) while( TRUE );
+  if ( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ))
+  {
+    return APA_out_of_range;
+  }
 #endif
+
   uint16_t curr_pixel;
 
   curr_pixel = st_pixel;
@@ -193,6 +207,8 @@ void APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
     led_buffer[curr_pixel].blue           = blue;
     curr_pixel++;
   }
+
+  return APA_OK;
 }
 
 
@@ -269,13 +285,13 @@ led_frame_st APA_HSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
   * param: hue.  The colour to set in HSV colourspace.
   * param: sat.  The saturation of pixel's colour.
   * param: vel.  The intensity of the pixel, outside of the master brightness.
-  * retval: none.
+  * retval: APA_Status_t.
   *
   */
-void APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
+APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
 {
 #ifdef APA_RANGE_CHECK
-  if ( pixel > MAX_LED ) while( TRUE );
+  if ( pixel > MAX_LED ) return APA_out_of_range;
 #endif
 
   led_frame_st rgb_set;
@@ -284,6 +300,8 @@ void APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sa
   rgb_set.master_bright = intensity | 0b11100000;
 
   APA_SetPixel( pixel, rgb_set.master_bright, rgb_set.red, rgb_set.green, rgb_set.blue);
+
+  return APA_OK;
 }
 
 
@@ -298,15 +316,15 @@ void APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sa
   * retval: none
   *
   */
-void APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v )
+APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v )
 {
 #ifdef APA_RANGE_CHECK
-  if ( st_pixel > MAX_LED ) while( TRUE )
-  if ( end_pixel > MAX_LED ) while( TRUE );
+  if( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ) ) return APA_out_of_range;
 #endif
 
   for( uint16_t curr_pixel = st_pixel; curr_pixel <= st_pixel; curr_pixel++ )
   {
     APA_SetPixelHSV( curr_pixel, intensity, h, s, v );
   }
+  return APA_OK;
 }
