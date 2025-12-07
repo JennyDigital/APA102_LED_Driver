@@ -59,9 +59,7 @@ static void sendStart( void )
   */
 static void sendStop( void )
 {
-#ifdef GD32_SPL
   SPI_BlockSend( &stopSignal.master_bright, 4 );
-#endif
 }
 
 
@@ -74,6 +72,7 @@ static void sendStop( void )
   */
 static void SPI_BlockSend( uint8_t * data, uint16_t length )
 {
+#ifdef GD32_SPL
   uint16_t value;
   
   for( uint16_t count = 0; count < length; count++ )
@@ -81,19 +80,21 @@ static void SPI_BlockSend( uint8_t * data, uint16_t length )
     value = (uint16_t) (*data);
 
     data++;
-#ifdef GD32_SPL
+
     spi_i2s_data_transmit( LED_SPI_PORT, value );
 
     // We use this flag because we aren't receiving anything.
     //
     while( spi_i2s_flag_get( LED_SPI_PORT, SPI_FLAG_TBE ) == RESET );
+  }
 #endif
+
 #ifdef STM32_HAL
   // Please note that if you wish to use another SPI port this will need cdhanging.
   //s
-  HAL_SPI_Transmit( &hspi1, &led_buffer[0].master_bright, sizeof( led_frame_st ), 100 );
+  HAL_SPI_Transmit( &hspi1, data, length, 100 );
 #endif
-  }
+
 }
 
 

@@ -1,4 +1,7 @@
 #include "main.h"
+#include <stdint.h>
+#include <gd32f10x.h>
+#include "APA102.h"
 
 volatile  uint32_t  systick_counter = 0;
 

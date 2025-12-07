@@ -24,16 +24,25 @@ SOFTWARE.
 
 #ifndef _APA102_H
 #define _APA102_H
-#include <gd32f10x.h>
 
+#ifdef GD32F10X_MD
+#define GD32_SPL
+#else
+#define STM32_HAL
+#endif
+
+#include <stdint.h>
+
+#ifdef GD32_SPL
+#include <gd32f10x.h>
+#endif
+
+#ifdef STM32_HAL
+#include "stm32f1xx.h"
+#endif
 // Set this to the amount of LEDs in the string.
 //
 #define LED_BUFF_SZ 30
-
-// Defines for different libraries used.
-//
-#define GD32_SPL        // For the GD32 line of mcu's.
-//#define STM32_HAL     // For the ever wonderful ST32's
 
 // Buffer Bounds Check option
 //
