@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 #include "APA102.h"
-
+#include <cross_studio_io.h>
 // Private variables
 //
 static led_frame_st  led_buffer[ LED_BUFF_SZ ];
@@ -59,7 +59,10 @@ static void sendStart( void )
   */
 static void sendStop( void )
 {
-  SPI_BlockSend( &stopSignal.master_bright, 4 );
+  for(  uint8_t num_of_stops = APA_STOPS_TO_SEND; num_of_stops > 0; num_of_stops-- )
+  {
+    SPI_BlockSend( &stopSignal.master_bright, 4 );
+  } 
 }
 
 

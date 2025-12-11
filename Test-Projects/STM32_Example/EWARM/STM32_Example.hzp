@@ -47,7 +47,7 @@
       arm_target_loader_applicable_loaders="Flash"
       arm_target_loader_default_loader="Flash"
       arm_target_trace_interface_type="None"
-      c_preprocessor_definitions="USE_HAL_DRIVER;STM32F103xE"
+      c_preprocessor_definitions="USE_HAL_DRIVER;STM32F103xE;STARTUP_FROM_RESET"
       c_user_include_directories="./../Core/Inc;./../Drivers/STM32F1xx_HAL_Driver/Inc;./../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;./../Drivers/CMSIS/Device/ST/STM32F1xx/Include;./../Drivers/CMSIS/Include;./../../../"
       debug_register_definition_file="$(TargetsDir)/STM32/STM32F103_Peripherals.xml"
       linker_memory_map_file="$(TargetsDir)/STM32/STM32F103RC_MemoryMap.xml"

@@ -42,7 +42,7 @@ SOFTWARE.
 #endif
 // Set this to the amount of LEDs in the string.
 //
-#define LED_BUFF_SZ 30
+#define LED_BUFF_SZ 30U
 
 // Buffer Bounds Check option
 //
@@ -57,6 +57,8 @@ SOFTWARE.
 // Highest LED address
 //
 #define MAX_LED ( LED_BUFF_SZ - 1 )
+
+#define APA_STOPS_TO_SEND ( LED_BUFF_SZ >> 5 )
 
 // Guarantee that TRUE is defined
 //
