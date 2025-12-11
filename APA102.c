@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 #include "APA102.h"
-#include <cross_studio_io.h>
 // Private variables
 //
 static led_frame_st  led_buffer[ LED_BUFF_SZ ];

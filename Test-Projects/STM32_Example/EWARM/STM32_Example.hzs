@@ -65,7 +65,7 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Twice a Second">
-   <Watchpoint expression="num_of_stops" name="num_of_stops" radix="-1" linenumber="0" filename=""/>
+   <Watchpoint expression="num_of_stops" name="num_of_stops" radix="-1" linenumber="0" filename="../EWARM"/>
   </Watches>
  </Watch1>
  <Watch2>
@@ -78,12 +78,14 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="69" useTextEdit="1" path="../Core/Src/main.c" left="0" top="40" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="381" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c" left="0" selected="1" top="352" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="103" useTextEdit="1" path="../Core/Src/main.c" left="0" selected="1" top="74" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="381" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c" left="0" top="352" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="50" y="63" useTextEdit="1" path="../../../APA102.c" left="0" top="16" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="22" y="44" useTextEdit="1" path="../../../APA102.h" left="0" top="12" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="896" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c" left="0" top="879" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../Core/Inc/main.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="177" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c" left="0" top="246" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c" left="0" top="0" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="STM32_Example" fileDialogDefaultFilter="*" autoConnectTarget="ST-LINK/V2-V3" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/jennifer/repos/ShopClockV3/Core/Inc" debugSearchPath="" autoConnectCapabilities="266111"/>
 </session>
