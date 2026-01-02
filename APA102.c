@@ -36,8 +36,11 @@ static led_frame_st  stopSignal                  = { 0xFF, 0xFF, 0xFF, 0xFF };
 extern SPI_HandleTypeDef hspi1;
 #endif
 
-// Private functions
-//
+
+/* Private functions */
+static  void          SPI_BlockSend       ( uint8_t * data, uint16_t length );
+static  void          sendStop            ( void );
+static  void          sendStart           ( void );
 
 
 /** Send the start signal to the LED string
@@ -128,6 +131,18 @@ void APA_sendBuffer( void )
 }
 
 
+/* Clear all pixels
+ *
+ * param: none
+ * retval: none
+*/
+void APA_Clear( void )
+{
+  APA_SetRange( 0, MAX_LED, 31, 0, 0, 0 );
+  APA_sendBuffer();
+}
+
+
 /** Sets the specified pixel.  Does not push the change to the string.
   *
   * param: uint8_t pixel. The pixel you wish to set.
@@ -150,29 +165,6 @@ APA_Status_t APA_SetPixel ( uint8_t pixel, uint8_t intensity, uint8_t red, uint8
   led_buffer[pixel].red             = red;
   led_buffer[pixel].green           = green;
   led_buffer[pixel].blue            = blue;
-
-  return APA_OK;
-}
-
-
-/** Gets the pixel parameters from the buffer
-  *
-  * param: pixel address.
-  * retval: APA_Status_t
-  */
-APA_Status_t APA_GetPixel( uint16_t pixel_to_get, led_frame_st * pixel_to_return )
-{
-#ifdef APA_RANGE_CHECK
-  if ( pixel_to_get > MAX_LED  )
-  {
-    return APA_out_of_range;
-  }
-#endif
-
-  led_frame_st pixel;
-
-  *pixel_to_return = led_buffer[ pixel_to_get ];
-  pixel_to_return->master_bright &= 0b11111;
 
   return APA_OK;
 }
@@ -215,6 +207,162 @@ APA_Status_t APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intens
 }
 
 
+/** Sets a pixel to the HSV colour specified
+  *
+  * param: pixel.  The pixel to set.
+  * param: intensity.  The master brightness of the pixel in question.  This is separate from the velocity.
+  * param: hue.  The colour to set in HSV colourspace.
+  * param: sat.  The saturation of pixel's colour.
+  * param: vel.  The intensity of the pixel, outside of the master brightness.
+  * retval: APA_Status_t.
+  *
+  */
+APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
+{
+#ifdef APA_RANGE_CHECK
+  if ( pixel > MAX_LED ) return APA_out_of_range;
+#endif
+
+  led_frame_st rgb_set;
+
+  rgb_set = APA_ConvHSVtoRGB( hue, sat, vel );
+  rgb_set.master_bright = intensity | 0b11100000;
+
+  APA_SetPixel( pixel, rgb_set.master_bright, rgb_set.red, rgb_set.green, rgb_set.blue);
+
+  return APA_OK;
+}
+
+
+/** Sets a pixel range to the HSV colour specified
+  *
+  * param: st_pixel.  The first pixel in the range to set.
+  * param: end_pixel.  The last pixel in the range to set.
+  * param: intensity.  The master brightness of the pixels in question.  This is separate from the velocity.
+  * param: hue.  The colour to set in HSV colourspace.
+  * param: sat.  The saturation of pixels colour.
+  * param: vel.  The intensity of the pixels, outside of the master brightness.
+  * retval: none
+  *
+  */
+APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v )
+{
+#ifdef APA_RANGE_CHECK
+  if( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ) ) return APA_out_of_range;
+#endif
+
+  for( uint16_t curr_pixel = st_pixel; curr_pixel <= end_pixel; curr_pixel++ )
+  {
+    APA_SetPixelHSV( curr_pixel, intensity, h, s, v );
+  }
+  return APA_OK;
+}
+
+
+/* Get the pixel parameters from the buffer in RGB format
+ *
+ * param: uint16_t pixel.  The pixel to get.
+ * retval: led_frame_st.  The structure containing the pixel's data.
+*/
+led_frame_st APA_GetPixelRGB( uint16_t pixel )
+{
+#ifdef APA_RANGE_CHECK
+  if ( pixel > MAX_LED  )
+  {
+    led_frame_st invalid = {0};
+    return invalid;
+  }
+#endif  
+
+  return led_buffer[ pixel ];
+}
+
+/* Get pixel parameters from the buffer in HSV format 
+ * param: uint16_t pixel.  The pixel to get.
+ * retval: led_frame_st.  The structure containing the pixel's data. 
+ */
+led_frame_st APA_GetPixelHSV( uint16_t pixel )
+{
+#ifdef APA_RANGE_CHECK
+  if ( pixel > MAX_LED  )
+  {
+    led_frame_st invalid = {0};
+    return invalid;
+  }
+#endif  
+
+  led_frame_st rgb_pixel;
+  led_frame_st hsv_pixel;
+
+  rgb_pixel = led_buffer[ pixel ];
+
+  hsv_pixel = APA_ConvRGBtoHSV( rgb_pixel.red, rgb_pixel.green, rgb_pixel.blue );
+  hsv_pixel.master_bright = rgb_pixel.master_bright & 0b00011111; // Copy over master brightness
+
+  return hsv_pixel;
+}
+
+
+/* Convert RGB to HSV 
+ * 
+ * param: uint8_t red.  The amount of red in the colour.
+ * param: uint8_t green.  The amount of green in the colour.
+ * param: uint8_t blue.  The amount of blue in the colour.
+ * retval: led_frame_st.  This contains the hue, saturation and value.
+ *
+ * Note: This does not set the master brightness bits.
+ */
+led_frame_st APA_ConvRGBtoHSV( uint8_t red, uint8_t green, uint8_t blue )
+{
+  led_frame_st hsv_out;
+  uint8_t min, max, delta;
+
+  min = red < green ? red : green;
+  min = min  < blue ? min  : blue;
+
+  max = red > green ? red : green;
+  max = max  > blue ? max  : blue;
+
+  hsv_out.master_bright = max; // Value
+
+  delta = max - min;
+
+  if ( max != 0 )
+  {
+    hsv_out.green = ( delta * 255 ) / max; // Saturation
+  }
+  else
+  {
+    // r = g = b = 0
+    hsv_out.green = 0;
+    hsv_out.red = 0; // Hue undefined
+    return hsv_out;
+  }
+
+  // Compute hue
+  //
+  if ( red == max )
+  {
+    hsv_out.red = ( ( green - blue ) * 43 ) / delta; // Hue
+  }
+  else if ( green == max )
+  {
+    hsv_out.red = ( ( blue - red ) * 43 ) / delta + 85; // Hue
+  }
+  else
+  {
+    hsv_out.red = ( ( red - green ) * 43 ) / delta + 171; // Hue
+  }
+
+  if ( hsv_out.red < 0 )
+  {
+    hsv_out.red += 256;
+  }
+
+  return hsv_out;
+} 
+
+
 /** Calculate RGB from HSV colourspace
   *
   * param: uint8_t hue. This is the colour
@@ -223,7 +371,7 @@ APA_Status_t APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intens
   * retval: led_frame_st.  This contains the red, green and blue parts.
   *
   */
-led_frame_st APA_HSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
+led_frame_st APA_ConvHSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
 {
   led_frame_st rgb_out;
 
@@ -281,53 +429,12 @@ led_frame_st APA_HSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
 }
 
 
-/** Sets a pixel to the HSV colour specified
+/** Get a pointer to the start of the LED buffer
   *
-  * param: pixel.  The pixel to set.
-  * param: intensity.  The master brightness of the pixel in question.  This is separate from the velocity.
-  * param: hue.  The colour to set in HSV colourspace.
-  * param: sat.  The saturation of pixel's colour.
-  * param: vel.  The intensity of the pixel, outside of the master brightness.
-  * retval: APA_Status_t.
-  *
+  * param: none
+  * retval: led_frame_st*.  Pointer to the start of the LED buffer.
   */
-APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
+led_frame_st* APA_GetBufferPointer ( void )
 {
-#ifdef APA_RANGE_CHECK
-  if ( pixel > MAX_LED ) return APA_out_of_range;
-#endif
-
-  led_frame_st rgb_set;
-
-  rgb_set = APA_HSVtoRGB( hue, sat, vel );
-  rgb_set.master_bright = intensity | 0b11100000;
-
-  APA_SetPixel( pixel, rgb_set.master_bright, rgb_set.red, rgb_set.green, rgb_set.blue);
-
-  return APA_OK;
-}
-
-
-/** Sets a pixel range to the HSV colour specified
-  *
-  * param: st_pixel.  The first pixel in the range to set.
-  * param: end_pixel.  The last pixel in the range to set.
-  * param: intensity.  The master brightness of the pixels in question.  This is separate from the velocity.
-  * param: hue.  The colour to set in HSV colourspace.
-  * param: sat.  The saturation of pixels colour.
-  * param: vel.  The intensity of the pixels, outside of the master brightness.
-  * retval: none
-  *
-  */
-APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v )
-{
-#ifdef APA_RANGE_CHECK
-  if( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ) ) return APA_out_of_range;
-#endif
-
-  for( uint16_t curr_pixel = st_pixel; curr_pixel <= end_pixel; curr_pixel++ )
-  {
-    APA_SetPixelHSV( curr_pixel, intensity, h, s, v );
-  }
-  return APA_OK;
+  return &led_buffer[0];
 }
