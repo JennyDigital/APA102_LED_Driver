@@ -92,8 +92,8 @@ static void SPI_BlockSend( uint8_t * data, uint16_t length )
 #endif
 
 #ifdef STM32_HAL
-  // Please note that if you wish to use another SPI port this will need cdhanging.
-  //s
+  // Please note that if you wish to use another SPI port this will need changing.
+  //
   HAL_SPI_Transmit( &hspi1, data, length, 100 );
 #endif
 
@@ -181,7 +181,7 @@ APA_Status_t APA_GetPixel( uint16_t pixel_to_get, led_frame_st * pixel_to_return
 /** Set a range of pixels to a specified state
   *
   * param: uint16_t st_pixel.  The starting pixel to set.
-  * param: uint26_t end_pixel.  The last pixel to set.
+  * param: uint16_t end_pixel.  The last pixel to set.
   * param: uint8_t intensity.  The global brightness (0-31) to use.
   * param: uint8_t red.  The amount of red to use.
   * param: uint8_t green.  The amount of green to use.
@@ -325,7 +325,7 @@ APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_
   if( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ) ) return APA_out_of_range;
 #endif
 
-  for( uint16_t curr_pixel = st_pixel; curr_pixel <= st_pixel; curr_pixel++ )
+  for( uint16_t curr_pixel = st_pixel; curr_pixel <= end_pixel; curr_pixel++ )
   {
     APA_SetPixelHSV( curr_pixel, intensity, h, s, v );
   }
