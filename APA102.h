@@ -78,6 +78,18 @@ typedef struct
 
 } led_frame_st;
 
+ led_frame_st led_pixelRGB_st;
+
+typedef struct
+{
+
+  uint8_t master_bright;
+  uint8_t hue;
+  uint8_t sat;
+  uint8_t vel;
+
+} led_pixelHSV_st;
+
 
 // Return status
 //
@@ -89,24 +101,24 @@ typedef enum
 
 // Exported functions
 //
-        void          APA_Init            ( void );
-        void          APA_sendBuffer      ( void );
-        void          APA_Clear           ( void );
+        void              APA_Init            ( void );
+        void              APA_sendBuffer      ( void );
+        void              APA_Clear           ( void );
 
-        APA_Status_t  APA_SetPixel        ( uint8_t pixel, uint8_t intensity,
-                                            uint8_t red, uint8_t green, uint8_t blue );
+        APA_Status_t      APA_SetPixel        ( uint8_t pixel, uint8_t intensity,
+                                              uint8_t red, uint8_t green, uint8_t blue );
 
-        APA_Status_t  APA_SetRange        ( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
-                                            uint8_t red, uint8_t green, uint8_t blue );
-        APA_Status_t  APA_SetPixelHSV     ( uint16_t pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v );
-        APA_Status_t  APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel,
-                                            uint8_t intensity, uint8_t h, uint8_t s, uint8_t v );
+        APA_Status_t      APA_SetRange        ( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity,
+                                              uint8_t red, uint8_t green, uint8_t blue );
+        APA_Status_t      APA_SetPixelHSV     ( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel );
+        APA_Status_t      APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel,
+                                              uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel );
                      
-        led_frame_st  APA_ConvHSVtoRGB    ( uint8_t hue, uint8_t sat, uint8_t vel );
-        led_frame_st  APA_ConvRGBtoHSV    ( uint8_t red, uint8_t green, uint8_t blue );
+        led_pixelRGB_st   APA_ConvHSVtoRGB    ( uint8_t hue, uint8_t sat, uint8_t vel );
+        led_pixelHSV_st   APA_ConvRGBtoHSV    ( uint8_t red, uint8_t green, uint8_t blue );
 
-        led_frame_st  APA_GetPixelRGB     ( uint16_t pixel );
-        led_frame_st  APA_GetPixelHSV     ( uint16_t pixel );
+        led_pixelRGB_st   APA_GetPixelRGB     ( uint16_t pixel );
+        led_pixelHSV_st   APA_GetPixelHSV     ( uint16_t pixel );
 
         led_frame_st* APA_GetBufferPointer( void );
 

@@ -4,7 +4,9 @@
   <BookmarkItem objectName="" line="27" column="4" path="/home/jennifer/Dropbox/DevFiles/stm32/Project/nucleoblink2/main.c" number="1" extra="RCC_PLLConfig( RCC_PLLSource_HSI, 8, 200, 4, 4, 4 );" color="5"/>
  </Bookmarks>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
-  <Exceptions/>
+  <Exceptions>
+   <Group group="V7M Exceptions" set="BusFault;ExceptionEntryReturnFault;HardFault;MemManage;UsageFault_CheckingError;UsageFault_Coprocessor;UsageFault_StateError"/>
+  </Exceptions>
  </Breakpoints>
  <ExecutionProfileWindow/>
  <FrameBuffer>
@@ -36,6 +38,7 @@
   <ProjectSessionItem path="STM32_Example;STM32_Example;Drivers"/>
   <ProjectSessionItem path="STM32_Example;STM32_Example;Drivers;APA102"/>
   <ProjectSessionItem path="STM32_Example;STM32_Example;Drivers;STM32F1xx_HAL_Driver"/>
+  <SourceCodeControlLogin password="F9BB6682F5D56822" user="JennyDigital &lt;jennifer.a.gunn@outlook.com>"/>
  </Project>
  <Register1>
   <RegisterWindow visibleNodes="" binaryNodes="" asciiNodes="" openNodes="" name="STM32_Example_STM32_Exampe" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -77,12 +80,12 @@
  <Files>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="69" useTextEdit="1" path="../Core/Src/main.c" left="0" top="40" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="381" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c" left="0" top="352" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="99" useTextEdit="1" path="../../../APA102.c" left="0" selected="1" top="79" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="99" useTextEdit="1" path="../../../APA102.c" left="0" top="79" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="22" y="44" useTextEdit="1" path="../../../APA102.h" left="0" top="12" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="896" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c" left="0" top="879" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="908" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c" left="0" selected="1" top="879" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../Core/Inc/main.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="177" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c" left="0" top="177" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c" left="0" top="0" codecName="Default"/>
  </Files>
- <ARMCrossStudioWindow activeProject="STM32_Example" fileDialogDefaultFilter="*" autoConnectTarget="ST-LINK/V2-V3" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/jennifer/repos/ShopClockV3/Core/Inc" debugSearchPath="" autoConnectCapabilities="44927"/>
+ <ARMCrossStudioWindow activeProject="STM32_Example" fileDialogDefaultFilter="*" autoConnectTarget="ST-LINK/V2-V3" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/jennifer/repos/ShopClockV3/Core/Inc" debugSearchPath="" autoConnectCapabilities="266111"/>
 </session>

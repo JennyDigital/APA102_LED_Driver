@@ -96,6 +96,20 @@ int main(void)
   /* USER CODE BEGIN 2 */
   APA_Init();
 
+  led_frame_st one_pixel ={0};
+  
+  while( 1 )
+  {
+    uint8_t j = 1;
+
+    for (uint8_t i=0; i<15; i++ )
+    {
+      APA_SetPixelHSV( i, 31, i+j, 210, 120 );
+      j+=9;
+      one_pixel = APA_GetPixelHSV( i );
+      APA_SetPixelHSV( i+15, one_pixel.master_bright, one_pixel.red, one_pixel.green, one_pixel.blue );
+    }
+  }
   int i = 0, j = 1;
   /* USER CODE END 2 */
 

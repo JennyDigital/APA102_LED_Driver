@@ -245,7 +245,7 @@ APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, ui
   * retval: none
   *
   */
-APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t h, uint8_t s, uint8_t v )
+APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
 {
 #ifdef APA_RANGE_CHECK
   if( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ) ) return APA_out_of_range;
@@ -253,7 +253,7 @@ APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_
 
   for( uint16_t curr_pixel = st_pixel; curr_pixel <= end_pixel; curr_pixel++ )
   {
-    APA_SetPixelHSV( curr_pixel, intensity, h, s, v );
+    APA_SetPixelHSV( curr_pixel, intensity, hue, sat, vel );
   }
   return APA_OK;
 }
@@ -262,9 +262,9 @@ APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_
 /* Get the pixel parameters from the buffer in RGB format
  *
  * param: uint16_t pixel.  The pixel to get.
- * retval: led_frame_st.  The structure containing the pixel's data.
+ * retval: led_pixelRGB_st.  The structure containing the pixel's data in RGB format.
 */
-led_frame_st APA_GetPixelRGB( uint16_t pixel )
+led_pixelRGB_st APA_GetPixelRGB( uint16_t pixel )
 {
 #ifdef APA_RANGE_CHECK
   if ( pixel > MAX_LED  )
@@ -274,25 +274,25 @@ led_frame_st APA_GetPixelRGB( uint16_t pixel )
   }
 #endif  
 
-  return led_buffer[ pixel ];
+  return (led_frame_st) led_buffer[ pixel ];
 }
 
 /* Get pixel parameters from the buffer in HSV format 
  * param: uint16_t pixel.  The pixel to get.
- * retval: led_frame_st.  The structure containing the pixel's data. 
+ * retval: led_pixelHSV_st.  The structure containing the pixel's data. 
  */
-led_frame_st APA_GetPixelHSV( uint16_t pixel )
+led_pixelHSV_st APA_GetPixelHSV( uint16_t pixel )
 {
 #ifdef APA_RANGE_CHECK
   if ( pixel > MAX_LED  )
   {
-    led_frame_st invalid = {0};
+    led_pixelHSV_st invalid = {0};
     return invalid;
   }
 #endif  
 
   led_frame_st rgb_pixel;
-  led_frame_st hsv_pixel;
+  led_pixelHSV_st hsv_pixel;
 
   rgb_pixel = led_buffer[ pixel ];
 
@@ -308,13 +308,13 @@ led_frame_st APA_GetPixelHSV( uint16_t pixel )
  * param: uint8_t red.  The amount of red in the colour.
  * param: uint8_t green.  The amount of green in the colour.
  * param: uint8_t blue.  The amount of blue in the colour.
- * retval: led_frame_st.  This contains the hue, saturation and value.
+ * retval: led_pixelHSV_st.  This contains the hue, saturation and value.
  *
  * Note: This does not set the master brightness bits.
  */
-led_frame_st APA_ConvRGBtoHSV( uint8_t red, uint8_t green, uint8_t blue )
+led_pixelHSV_st APA_ConvRGBtoHSV( uint8_t red, uint8_t green, uint8_t blue )
 {
-  led_frame_st hsv_out;
+  led_pixelHSV_st hsv_out;
   uint8_t min, max, delta;
 
   min = red < green ? red : green;
@@ -323,19 +323,19 @@ led_frame_st APA_ConvRGBtoHSV( uint8_t red, uint8_t green, uint8_t blue )
   max = red > green ? red : green;
   max = max  > blue ? max  : blue;
 
-  hsv_out.master_bright = max; // Value
+  hsv_out.vel = max; // Value
 
   delta = max - min;
 
   if ( max != 0 )
   {
-    hsv_out.green = ( delta * 255 ) / max; // Saturation
+    hsv_out.sat = ( delta * 255 ) / max; // Saturation
   }
   else
   {
     // r = g = b = 0
-    hsv_out.green = 0;
-    hsv_out.red = 0; // Hue undefined
+    hsv_out.sat = 0;
+    hsv_out.hue = 0; // Hue undefined
     return hsv_out;
   }
 
@@ -343,20 +343,20 @@ led_frame_st APA_ConvRGBtoHSV( uint8_t red, uint8_t green, uint8_t blue )
   //
   if ( red == max )
   {
-    hsv_out.red = ( ( green - blue ) * 43 ) / delta; // Hue
+    hsv_out.hue = ( ( green - blue ) * 43 ) / delta; // Hue
   }
   else if ( green == max )
   {
-    hsv_out.red = ( ( blue - red ) * 43 ) / delta + 85; // Hue
+    hsv_out.hue = ( ( blue - red ) * 43 ) / delta + 85; // Hue
   }
   else
   {
-    hsv_out.red = ( ( red - green ) * 43 ) / delta + 171; // Hue
+    hsv_out.hue = ( ( red - green ) * 43 ) / delta + 171; // Hue
   }
 
-  if ( hsv_out.red < 0 )
+  if ( hsv_out.hue < 0 )
   {
-    hsv_out.red += 256;
+    hsv_out.hue += 256;
   }
 
   return hsv_out;
@@ -368,12 +368,12 @@ led_frame_st APA_ConvRGBtoHSV( uint8_t red, uint8_t green, uint8_t blue )
   * param: uint8_t hue. This is the colour
   * param: uint8_t sat. The saturation of the colour
   * param: uint8_t vel. Intensity of the colour
-  * retval: led_frame_st.  This contains the red, green and blue parts.
+  * retval: led_pixelRGB_st.  This contains the red, green and blue parts.
   *
   */
-led_frame_st APA_ConvHSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
+led_pixelRGB_st APA_ConvHSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
 {
-  led_frame_st rgb_out;
+  led_pixelRGB_st rgb_out;
 
   // Convert from RGB to HSV
   //
