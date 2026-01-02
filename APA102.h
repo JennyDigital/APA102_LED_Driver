@@ -70,7 +70,6 @@ SOFTWARE.
 //
 typedef struct
 {
-
   uint8_t master_bright;
   uint8_t blue;
   uint8_t green;
@@ -78,11 +77,20 @@ typedef struct
 
 } led_frame_st;
 
- led_frame_st led_pixelRGB_st;
+// This is the structure that holds your LED values.
+//
+typedef struct
+{
+  uint8_t master_bright;
+  uint8_t blue;
+  uint8_t green;
+  uint8_t red;
+
+} led_pixelRGB_st;
+
 
 typedef struct
 {
-
   uint8_t master_bright;
   uint8_t hue;
   uint8_t sat;

@@ -243,7 +243,7 @@ Discarded input sections
  .text.APA_SetPixelRangeHSV
                 0x00000000       0x7c STM32_Example THUMB Debug/APA102.o
  .text.APA_GetPixelRGB
-                0x00000000       0x54 STM32_Example THUMB Debug/APA102.o
+                0x00000000       0x7c STM32_Example THUMB Debug/APA102.o
  .text.APA_GetPixelHSV
                 0x00000000       0x80 STM32_Example THUMB Debug/APA102.o
  .text.APA_ConvRGBtoHSV
@@ -4733,19 +4733,19 @@ END GROUP
 OUTPUT(/home/jennifer/repos/APA102_LED_Driver/Test-Projects/STM32_Example/EWARM/STM32_Example THUMB Debug/STM32_Example.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000     0x5cb3
+.debug_info     0x00000000     0x5d43
  .debug_info    0x00000000      0xec0 STM32_Example THUMB Debug/main.o
  .debug_info    0x00000ec0      0x89c STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
  .debug_info    0x0000175c      0x122 STM32_Example THUMB Debug/stm32f1xx_it.o
- .debug_info    0x0000187e      0xb44 STM32_Example THUMB Debug/APA102.o
- .debug_info    0x000023c2      0x225 STM32_Example THUMB Debug/system_stm32f1xx.o
- .debug_info    0x000025e7      0x78e STM32_Example THUMB Debug/stm32f1xx_hal.o
- .debug_info    0x00002d75      0xb62 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
- .debug_info    0x000038d7      0x5fd STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
- .debug_info    0x00003ed4      0x841 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
- .debug_info    0x00004715     0x1558 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
- .debug_info    0x00005c6d       0x24 STM32_Example THUMB Debug/STM32_Startup.o
- .debug_info    0x00005c91       0x22 STM32_Example THUMB Debug/thumb_crt0.o
+ .debug_info    0x0000187e      0xbd4 STM32_Example THUMB Debug/APA102.o
+ .debug_info    0x00002452      0x225 STM32_Example THUMB Debug/system_stm32f1xx.o
+ .debug_info    0x00002677      0x78e STM32_Example THUMB Debug/stm32f1xx_hal.o
+ .debug_info    0x00002e05      0xb62 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ .debug_info    0x00003967      0x5fd STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+ .debug_info    0x00003f64      0x841 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+ .debug_info    0x000047a5     0x1558 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+ .debug_info    0x00005cfd       0x24 STM32_Example THUMB Debug/STM32_Startup.o
+ .debug_info    0x00005d21       0x22 STM32_Example THUMB Debug/thumb_crt0.o
 
 .debug_abbrev   0x00000000     0x14f8
  .debug_abbrev  0x00000000      0x318 STM32_Example THUMB Debug/main.o
@@ -4785,7 +4785,7 @@ LOAD linker stubs
                 0x00001cec      0x6c8 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
 
 .debug_pubtypes
-                0x00000000     0x1051
+                0x00000000     0x1079
  .debug_pubtypes
                 0x00000000      0x2af STM32_Example THUMB Debug/main.o
  .debug_pubtypes
@@ -4793,19 +4793,19 @@ LOAD linker stubs
  .debug_pubtypes
                 0x000004e3       0xc5 STM32_Example THUMB Debug/stm32f1xx_it.o
  .debug_pubtypes
-                0x000005a8      0x225 STM32_Example THUMB Debug/APA102.o
+                0x000005a8      0x24d STM32_Example THUMB Debug/APA102.o
  .debug_pubtypes
-                0x000007cd       0xee STM32_Example THUMB Debug/system_stm32f1xx.o
+                0x000007f5       0xee STM32_Example THUMB Debug/system_stm32f1xx.o
  .debug_pubtypes
-                0x000008bb      0x154 STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x000008e3      0x154 STM32_Example THUMB Debug/stm32f1xx_hal.o
  .debug_pubtypes
-                0x00000a0f      0x124 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x00000a37      0x124 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
  .debug_pubtypes
-                0x00000b33      0x15f STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+                0x00000b5b      0x15f STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
  .debug_pubtypes
-                0x00000c92      0x1ad STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x00000cba      0x1ad STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
  .debug_pubtypes
-                0x00000e3f      0x212 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+                0x00000e67      0x212 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
 
 .debug_aranges  0x00000000      0x6a8
  .debug_aranges
@@ -4894,34 +4894,34 @@ LOAD linker stubs
  .debug_macro   0x0001778d      0x166 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
  .debug_macro   0x000178f3      0x15c STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
 
-.debug_line     0x00000000     0x53dc
+.debug_line     0x00000000     0x53ec
  .debug_line    0x00000000      0x54b STM32_Example THUMB Debug/main.o
  .debug_line    0x0000054b      0x3e8 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
  .debug_line    0x00000933      0x44c STM32_Example THUMB Debug/stm32f1xx_it.o
- .debug_line    0x00000d7f      0x677 STM32_Example THUMB Debug/APA102.o
- .debug_line    0x000013f6      0x41c STM32_Example THUMB Debug/system_stm32f1xx.o
- .debug_line    0x00001812      0x64d STM32_Example THUMB Debug/stm32f1xx_hal.o
- .debug_line    0x00001e5f      0x834 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
- .debug_line    0x00002693      0x6d2 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
- .debug_line    0x00002d65      0xb0c STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
- .debug_line    0x00003871     0x18e4 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
- .debug_line    0x00005155      0x10a STM32_Example THUMB Debug/STM32_Startup.o
- .debug_line    0x0000525f      0x17d STM32_Example THUMB Debug/thumb_crt0.o
+ .debug_line    0x00000d7f      0x687 STM32_Example THUMB Debug/APA102.o
+ .debug_line    0x00001406      0x41c STM32_Example THUMB Debug/system_stm32f1xx.o
+ .debug_line    0x00001822      0x64d STM32_Example THUMB Debug/stm32f1xx_hal.o
+ .debug_line    0x00001e6f      0x834 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ .debug_line    0x000026a3      0x6d2 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+ .debug_line    0x00002d75      0xb0c STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+ .debug_line    0x00003881     0x18e4 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+ .debug_line    0x00005165      0x10a STM32_Example THUMB Debug/STM32_Startup.o
+ .debug_line    0x0000526f      0x17d STM32_Example THUMB Debug/thumb_crt0.o
 
-.debug_str      0x00000000    0x8bb2a
- .debug_str     0x00000000    0x8bb2a STM32_Example THUMB Debug/main.o
+.debug_str      0x00000000    0x8bb58
+ .debug_str     0x00000000    0x8bb58 STM32_Example THUMB Debug/main.o
                               0x8a87c (size before relaxing)
- .debug_str     0x0008bb2a    0x8a0e4 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
- .debug_str     0x0008bb2a    0x89cb8 STM32_Example THUMB Debug/stm32f1xx_it.o
- .debug_str     0x0008bb2a    0x8a1ff STM32_Example THUMB Debug/APA102.o
- .debug_str     0x0008bb2a    0x89c65 STM32_Example THUMB Debug/system_stm32f1xx.o
- .debug_str     0x0008bb2a    0x8a486 STM32_Example THUMB Debug/stm32f1xx_hal.o
- .debug_str     0x0008bb2a    0x8a3be STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
- .debug_str     0x0008bb2a    0x89fea STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
- .debug_str     0x0008bb2a    0x8a089 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
- .debug_str     0x0008bb2a    0x8a586 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
- .debug_str     0x0008bb2a       0xbe STM32_Example THUMB Debug/STM32_Startup.o
- .debug_str     0x0008bb2a       0x8d STM32_Example THUMB Debug/thumb_crt0.o
+ .debug_str     0x0008bb58    0x8a0e4 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+ .debug_str     0x0008bb58    0x89cb8 STM32_Example THUMB Debug/stm32f1xx_it.o
+ .debug_str     0x0008bb58    0x8a22d STM32_Example THUMB Debug/APA102.o
+ .debug_str     0x0008bb58    0x89c65 STM32_Example THUMB Debug/system_stm32f1xx.o
+ .debug_str     0x0008bb58    0x8a486 STM32_Example THUMB Debug/stm32f1xx_hal.o
+ .debug_str     0x0008bb58    0x8a3be STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ .debug_str     0x0008bb58    0x89fea STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+ .debug_str     0x0008bb58    0x8a089 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+ .debug_str     0x0008bb58    0x8a586 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+ .debug_str     0x0008bb58       0xbe STM32_Example THUMB Debug/STM32_Startup.o
+ .debug_str     0x0008bb58       0x8d STM32_Example THUMB Debug/thumb_crt0.o
 
 .comment        0x00000000       0x3d
  .comment       0x00000000       0x3d STM32_Example THUMB Debug/main.o

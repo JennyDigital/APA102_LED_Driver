@@ -223,7 +223,7 @@ APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, ui
   if ( pixel > MAX_LED ) return APA_out_of_range;
 #endif
 
-  led_frame_st rgb_set;
+  led_pixelRGB_st rgb_set;
 
   rgb_set = APA_ConvHSVtoRGB( hue, sat, vel );
   rgb_set.master_bright = intensity | 0b11100000;
@@ -266,15 +266,20 @@ APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_
 */
 led_pixelRGB_st APA_GetPixelRGB( uint16_t pixel )
 {
+  led_pixelRGB_st working_pixel = {0};
+
 #ifdef APA_RANGE_CHECK
   if ( pixel > MAX_LED  )
   {
-    led_frame_st invalid = {0};
-    return invalid;
+    return working_pixel;
   }
 #endif  
 
-  return (led_frame_st) led_buffer[ pixel ];
+  working_pixel.red = led_buffer[ pixel ].red;
+  working_pixel.green = led_buffer[ pixel ].green;
+  working_pixel.blue = led_buffer[ pixel ].blue;
+  
+  return working_pixel;
 }
 
 /* Get pixel parameters from the buffer in HSV format 
