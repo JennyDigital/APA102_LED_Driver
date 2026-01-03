@@ -1,7 +1,7 @@
 # APA102_LED_Driver
 A simple LED driver for the APA102 Addressable LEDs.  Works with STM32 and GD32 at present.
 
-Please note that this an early early release and improvents and bug fixes are sure to follow.
+Please feel free to make suggestions, it should now be good enough for more serious applications.
 
 ## Quick Start Guide
 To use this driver you will need to enable an SPI peripheral on your chosen mcu or supply your own software SPI routine.

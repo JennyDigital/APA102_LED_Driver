@@ -107,10 +107,10 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="20" useTextEdit="1" path="main.c" left="0" selected="1" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="20" useTextEdit="1" path="main.c" left="0" selected="1" top="7" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="14" y="3" useTextEdit="1" path="main.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="149" useTextEdit="1" path="../../APA102.c" left="0" top="147" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="2" y="90" useTextEdit="1" path="../../APA102.h" left="0" top="58" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="90" useTextEdit="1" path="../../APA102.h" left="0" top="77" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="Twinkler_APA102C" fileDialogDefaultFilter="*.c;*.h" autoConnectTarget="ST-LINK/V2-V3" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/jennifer/repos/APA102_LED_Driver" debugSearchPath="" autoConnectCapabilities="388991"/>
 </session>

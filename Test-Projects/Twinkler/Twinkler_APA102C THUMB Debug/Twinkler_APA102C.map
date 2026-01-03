@@ -3195,7 +3195,7 @@ Discarded input sections
  .text.APA_SetPixelRangeHSV
                 0x00000000       0x7c Twinkler_APA102C THUMB Debug/APA102.o
  .text.APA_GetPixelRGB
-                0x00000000       0x54 Twinkler_APA102C THUMB Debug/APA102.o
+                0x00000000       0x7c Twinkler_APA102C THUMB Debug/APA102.o
  .text.APA_GetPixelHSV
                 0x00000000       0x80 Twinkler_APA102C THUMB Debug/APA102.o
  .text.APA_ConvRGBtoHSV
@@ -6331,16 +6331,16 @@ END GROUP
 OUTPUT(/home/jennifer/repos/APA102_LED_Driver/Test-Projects/Twinkler/Twinkler_APA102C THUMB Debug/Twinkler_APA102C.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000     0x2e71
+.debug_info     0x00000000     0x2f01
  .debug_info    0x00000000      0x178 Twinkler_APA102C THUMB Debug/system_gd32f10x.o
  .debug_info    0x00000178      0x609 Twinkler_APA102C THUMB Debug/gd32f10x_gpio.o
  .debug_info    0x00000781      0xc3d Twinkler_APA102C THUMB Debug/gd32f10x_rcu.o
  .debug_info    0x000013be      0x8fd Twinkler_APA102C THUMB Debug/gd32f10x_spi.o
- .debug_info    0x00001cbb      0x696 Twinkler_APA102C THUMB Debug/APA102.o
- .debug_info    0x00002351      0xab8 Twinkler_APA102C THUMB Debug/main.o
- .debug_info    0x00002e09       0x23 Twinkler_APA102C THUMB Debug/GD32F10x_MD_Vectors.o
- .debug_info    0x00002e2c       0x23 Twinkler_APA102C THUMB Debug/GD32F10x_Startup.o
- .debug_info    0x00002e4f       0x22 Twinkler_APA102C THUMB Debug/thumb_crt0.o
+ .debug_info    0x00001cbb      0x726 Twinkler_APA102C THUMB Debug/APA102.o
+ .debug_info    0x000023e1      0xab8 Twinkler_APA102C THUMB Debug/main.o
+ .debug_info    0x00002e99       0x23 Twinkler_APA102C THUMB Debug/GD32F10x_MD_Vectors.o
+ .debug_info    0x00002ebc       0x23 Twinkler_APA102C THUMB Debug/GD32F10x_Startup.o
+ .debug_info    0x00002edf       0x22 Twinkler_APA102C THUMB Debug/thumb_crt0.o
 
 .debug_abbrev   0x00000000      0xbf8
  .debug_abbrev  0x00000000       0xeb Twinkler_APA102C THUMB Debug/system_gd32f10x.o
@@ -6369,7 +6369,7 @@ LOAD linker stubs
                 0x0000117f      0x8a0 Twinkler_APA102C THUMB Debug/main.o
 
 .debug_pubtypes
-                0x00000000      0x7aa
+                0x00000000      0x7d2
  .debug_pubtypes
                 0x00000000       0xe7 Twinkler_APA102C THUMB Debug/system_gd32f10x.o
  .debug_pubtypes
@@ -6379,9 +6379,9 @@ LOAD linker stubs
  .debug_pubtypes
                 0x000003d0      0x135 Twinkler_APA102C THUMB Debug/gd32f10x_spi.o
  .debug_pubtypes
-                0x00000505      0x118 Twinkler_APA102C THUMB Debug/APA102.o
+                0x00000505      0x140 Twinkler_APA102C THUMB Debug/APA102.o
  .debug_pubtypes
-                0x0000061d      0x18d Twinkler_APA102C THUMB Debug/main.o
+                0x00000645      0x18d Twinkler_APA102C THUMB Debug/main.o
 
 .debug_aranges  0x00000000      0x4a0
  .debug_aranges
@@ -6463,28 +6463,28 @@ LOAD linker stubs
  .debug_macro   0x00009be0       0x22 Twinkler_APA102C THUMB Debug/main.o
  .debug_macro   0x00009c02       0x34 Twinkler_APA102C THUMB Debug/main.o
 
-.debug_line     0x00000000     0x3b3d
+.debug_line     0x00000000     0x3b4d
  .debug_line    0x00000000      0x743 Twinkler_APA102C THUMB Debug/system_gd32f10x.o
  .debug_line    0x00000743      0x9d7 Twinkler_APA102C THUMB Debug/gd32f10x_gpio.o
  .debug_line    0x0000111a      0xc8d Twinkler_APA102C THUMB Debug/gd32f10x_rcu.o
  .debug_line    0x00001da7      0xa83 Twinkler_APA102C THUMB Debug/gd32f10x_spi.o
- .debug_line    0x0000282a      0x8ce Twinkler_APA102C THUMB Debug/APA102.o
- .debug_line    0x000030f8      0x732 Twinkler_APA102C THUMB Debug/main.o
- .debug_line    0x0000382a       0xe0 Twinkler_APA102C THUMB Debug/GD32F10x_MD_Vectors.o
- .debug_line    0x0000390a       0xb6 Twinkler_APA102C THUMB Debug/GD32F10x_Startup.o
- .debug_line    0x000039c0      0x17d Twinkler_APA102C THUMB Debug/thumb_crt0.o
+ .debug_line    0x0000282a      0x8de Twinkler_APA102C THUMB Debug/APA102.o
+ .debug_line    0x00003108      0x732 Twinkler_APA102C THUMB Debug/main.o
+ .debug_line    0x0000383a       0xe0 Twinkler_APA102C THUMB Debug/GD32F10x_MD_Vectors.o
+ .debug_line    0x0000391a       0xb6 Twinkler_APA102C THUMB Debug/GD32F10x_Startup.o
+ .debug_line    0x000039d0      0x17d Twinkler_APA102C THUMB Debug/thumb_crt0.o
 
-.debug_str      0x00000000    0x29bca
- .debug_str     0x00000000    0x29bca Twinkler_APA102C THUMB Debug/system_gd32f10x.o
+.debug_str      0x00000000    0x29bf8
+ .debug_str     0x00000000    0x29bf8 Twinkler_APA102C THUMB Debug/system_gd32f10x.o
                               0x27d26 (size before relaxing)
- .debug_str     0x00029bca    0x2813b Twinkler_APA102C THUMB Debug/gd32f10x_gpio.o
- .debug_str     0x00029bca    0x28794 Twinkler_APA102C THUMB Debug/gd32f10x_rcu.o
- .debug_str     0x00029bca    0x282b4 Twinkler_APA102C THUMB Debug/gd32f10x_spi.o
- .debug_str     0x00029bca    0x27e42 Twinkler_APA102C THUMB Debug/APA102.o
- .debug_str     0x00029bca    0x284d9 Twinkler_APA102C THUMB Debug/main.o
- .debug_str     0x00029bca       0xb3 Twinkler_APA102C THUMB Debug/GD32F10x_MD_Vectors.o
- .debug_str     0x00029bca       0xb0 Twinkler_APA102C THUMB Debug/GD32F10x_Startup.o
- .debug_str     0x00029bca       0x72 Twinkler_APA102C THUMB Debug/thumb_crt0.o
+ .debug_str     0x00029bf8    0x2813b Twinkler_APA102C THUMB Debug/gd32f10x_gpio.o
+ .debug_str     0x00029bf8    0x28794 Twinkler_APA102C THUMB Debug/gd32f10x_rcu.o
+ .debug_str     0x00029bf8    0x282b4 Twinkler_APA102C THUMB Debug/gd32f10x_spi.o
+ .debug_str     0x00029bf8    0x27e70 Twinkler_APA102C THUMB Debug/APA102.o
+ .debug_str     0x00029bf8    0x284d9 Twinkler_APA102C THUMB Debug/main.o
+ .debug_str     0x00029bf8       0xb3 Twinkler_APA102C THUMB Debug/GD32F10x_MD_Vectors.o
+ .debug_str     0x00029bf8       0xb0 Twinkler_APA102C THUMB Debug/GD32F10x_Startup.o
+ .debug_str     0x00029bf8       0x72 Twinkler_APA102C THUMB Debug/thumb_crt0.o
 
 .comment        0x00000000       0x3d
  .comment       0x00000000       0x3d Twinkler_APA102C THUMB Debug/system_gd32f10x.o
