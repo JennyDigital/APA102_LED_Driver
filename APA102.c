@@ -251,9 +251,11 @@ APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_
   if( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ) ) return APA_out_of_range;
 #endif
 
+  led_pixelRGB_st rgb_set = APA_ConvHSVtoRGB( hue, sat, vel );
+
   for( uint16_t curr_pixel = st_pixel; curr_pixel <= end_pixel; curr_pixel++ )
   {
-    APA_SetPixelHSV( curr_pixel, intensity, hue, sat, vel );
+    APA_SetPixel( curr_pixel, intensity, rgb_set.red, rgb_set.green, rgb_set.blue );
   }
   return APA_OK;
 }
