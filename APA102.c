@@ -23,11 +23,34 @@ SOFTWARE.
 */
 
 #include "APA102.h"
+#include <math.h>
+
 // Private variables
 //
-static led_frame_st  led_buffer[ LED_BUFF_SZ ];
-static led_frame_st  startSignal                 = {0};
+static led_frame_st  led_buffer[ LED_BUFF_SZ ]   = { 0 };
+static led_frame_st  startSignal                 = { 0 };
 static led_frame_st  stopSignal                  = { 0xFF, 0xFF, 0xFF, 0xFF };
+
+#ifdef APA_GAMMA_CORRECT
+static const uint8_t gamma_table[256] = {
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+    0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1,   1,
+    1,   1,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,   4,   4,   4,
+    4,   5,   5,   5,   5,   6,   6,   6,   6,   7,   7,   7,   8,   8,   8,   9,
+    9,   9,  10,  10,  11,  11,  11,  12,  12,  13,  13,  13,  14,  14,  15,  15,
+   16,  16,  17,  17,  18,  18,  19,  19,  20,  20,  21,  22,  22,  23,  23,  24,
+   25,  25,  26,  27,  27,  28,  29,  29,  30,  31,  32,  32,  33,  34,  35,  35,
+   36,  37,  38,  39,  40,  40,  41,  42,  43,  44,  45,  46,  47,  48,  49,  50,
+   51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,  65,  66,  67,
+   68,  69,  71,  72,  73,  74,  76,  77,  78,  80,  81,  82,  84,  85,  87,  88,
+   89,  91,  92,  94,  95,  97,  98, 100, 101, 103, 104, 106, 108, 109, 111, 112,
+  114, 116, 117, 119, 121, 122, 124, 126, 128, 129, 131, 133, 135, 136, 138, 140,
+  142, 144, 146, 148, 149, 151, 153, 155, 157, 159, 161, 163, 165, 167, 169, 171,
+  173, 175, 177, 179, 181, 184, 186, 188, 190, 192, 194, 197, 199, 201, 203, 206,
+  208, 210, 212, 215, 217, 219, 222, 224, 226, 229, 231, 234, 236, 238, 241, 243,
+  246, 248, 251, 253, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
+};
+#endif
 
 #ifdef STM32_HAL
 // This will need setting to whichever SPI port you are using
@@ -41,6 +64,9 @@ extern SPI_HandleTypeDef hspi1;
 static  void          SPI_BlockSend       ( uint8_t * data, uint16_t length );
 static  void          sendStop            ( void );
 static  void          sendStart           ( void );
+#ifdef APA_GAMMA_CORRECT
+static  uint8_t       applyGamma          ( uint8_t value );
+#endif
 
 
 /** Send the start signal to the LED string
@@ -102,6 +128,13 @@ static void SPI_BlockSend( uint8_t * data, uint16_t length )
 
 }
 
+#ifdef APA_GAMMA_CORRECT
+static uint8_t applyGamma( uint8_t value )
+{
+  return gamma_table[value];
+}
+#endif
+
 
 // Exported functions
 //
@@ -160,11 +193,22 @@ APA_Status_t APA_SetPixel ( uint8_t pixel, uint8_t intensity, uint8_t red, uint8
     return APA_out_of_range;
   }
 
+  /* Limit brightness raqnge */
+  if ( intensity > APA_BRIGHTNESS_MAX )
+  {
+    intensity = APA_BRIGHTNESS_MAX;
+  }
 #endif
-  led_buffer[pixel].master_bright   = intensity | 0b11100000;
+  led_buffer[pixel].master_bright   = intensity | APA_BRIGHTNESS_MASK;
+#ifdef APA_GAMMA_CORRECT
+  led_buffer[pixel].red             = applyGamma( red );
+  led_buffer[pixel].green           = applyGamma( green );
+  led_buffer[pixel].blue            = applyGamma( blue );
+#else
   led_buffer[pixel].red             = red;
   led_buffer[pixel].green           = green;
   led_buffer[pixel].blue            = blue;
+#endif
 
   return APA_OK;
 }
@@ -184,9 +228,16 @@ APA_Status_t APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intens
                            uint8_t red, uint8_t green, uint8_t blue )
 {
 #ifdef APA_RANGE_CHECK
-  if ( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ))
+  if (  ( st_pixel  > MAX_LED )   ||
+        ( end_pixel > MAX_LED )   ||
+        ( st_pixel  > end_pixel )
+     )
   {
     return APA_out_of_range;
+  }
+  if ( intensity > APA_BRIGHTNESS_MAX )
+  {
+    intensity = APA_BRIGHTNESS_MAX;
   }
 #endif
 
@@ -196,10 +247,16 @@ APA_Status_t APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intens
 
   while ( curr_pixel <= end_pixel )
   {
-    led_buffer[curr_pixel].master_bright  = intensity | 0b11100000;
+    led_buffer[curr_pixel].master_bright  = intensity | APA_BRIGHTNESS_MASK;
+#ifdef APA_GAMMA_CORRECT
+    led_buffer[curr_pixel].red            = applyGamma( red );
+    led_buffer[curr_pixel].green          = applyGamma( green );
+    led_buffer[curr_pixel].blue           = applyGamma( blue );
+#else
     led_buffer[curr_pixel].red            = red;
     led_buffer[curr_pixel].green          = green;
     led_buffer[curr_pixel].blue           = blue;
+#endif
     curr_pixel++;
   }
 
@@ -221,12 +278,17 @@ APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, ui
 {
 #ifdef APA_RANGE_CHECK
   if ( pixel > MAX_LED ) return APA_out_of_range;
+  /* Limit brightness raqnge */
+  if ( intensity > APA_BRIGHTNESS_MAX )
+  {
+    intensity = APA_BRIGHTNESS_MAX;
+  }
 #endif
 
   led_pixelRGB_st rgb_set;
 
   rgb_set = APA_ConvHSVtoRGB( hue, sat, vel );
-  rgb_set.master_bright = intensity | 0b11100000;
+  rgb_set.master_bright = intensity | APA_BRIGHTNESS_MASK;
 
   APA_SetPixel( pixel, rgb_set.master_bright, rgb_set.red, rgb_set.green, rgb_set.blue);
 
@@ -248,7 +310,13 @@ APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, ui
 APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
 {
 #ifdef APA_RANGE_CHECK
-  if( ( st_pixel > MAX_LED ) || ( end_pixel > MAX_LED ) ) return APA_out_of_range;
+  if( 
+      ( st_pixel > MAX_LED )    || 
+      ( end_pixel > MAX_LED )   ||
+      ( st_pixel  > end_pixel )
+    ) {
+        return APA_out_of_range;
+      }
 #endif
 
   led_pixelRGB_st rgb_set = APA_ConvHSVtoRGB( hue, sat, vel );
@@ -444,4 +512,16 @@ led_pixelRGB_st APA_ConvHSVtoRGB( uint8_t hue, uint8_t sat, uint8_t vel )
 led_frame_st* APA_GetBufferPointer ( void )
 {
   return &led_buffer[0];
+}
+
+
+APA_Status_t APA_SetPixelColour( uint16_t pixel, uint8_t intensity, APA_colour_st colour )
+{
+  return APA_SetPixel( pixel, intensity, colour.red, colour.green, colour.blue );
+}
+
+
+APA_Status_t APA_SetRangeColour( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, APA_colour_st colour )
+{
+  return APA_SetRange( st_pixel, end_pixel, intensity, colour.red, colour.green, colour.blue );
 }
