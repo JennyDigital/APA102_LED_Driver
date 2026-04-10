@@ -1,6 +1,6 @@
 #include "main.h"
 #include <stdint.h>
-#include <gd32f10x.h>
+#include "APA102_hw_gd32_spl.h"
 #include "APA102.h"
 
 volatile  uint32_t  systick_counter = 0;
@@ -20,7 +20,7 @@ void Error_Handler( void );
 void delay_ms( uint32_t millis );
 void SysTick_Handler( void );
 
-void main( void )
+int main( void )
 {
   SystemInit();
   SetupClock();
@@ -32,7 +32,7 @@ void main( void )
 
   while( TRUE )
   {
-    for( i = 0; i < 30; i++ )
+    for( i = 0; i < APA_GetBufferSize(); i++ )
     {
       APA_SetPixelHSV( i, 31, i+j, 210, 120 );
       j+=9;

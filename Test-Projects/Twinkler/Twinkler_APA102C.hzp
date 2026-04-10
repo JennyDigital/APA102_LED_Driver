@@ -45,8 +45,10 @@
       arm_target_interface_type="SWD"
       arm_target_loader_applicable_loaders="Flash"
       arm_target_loader_default_loader="Flash"
+      c_language_standard="C99"
       c_user_include_directories="$(DeviceIncludePath);$(TargetsDir)/GD32F10x/Include;$(TargetsDir)/GD32F10x/CMSIS/Device/Firmware/Peripherals/inc;../../"
       debug_register_definition_file="$(DeviceRegisterDefinitionFile)"
+      gcc_c_language_standard="c17"
       gcc_entry_point="Reset_Handler"
       linker_memory_map_file="$(DeviceMemoryMapFile)"
       linker_section_placement_file="$(StudioDir)/targets/Cortex_M/flash_placement.xml"
@@ -106,6 +108,9 @@
       <folder Name="APA102">
         <file file_name="../../APA102.c" />
         <file file_name="../../APA102.h" />
+        <file file_name="../../APA102_hw_backend.h" />
+        <file file_name="../../APA102_hw_gd32_spl.c" />
+        <file file_name="../../APA102_hw_gd32_spl.h" />
       </folder>
       <file file_name="main.c" />
       <file file_name="main.h" />

@@ -3,12 +3,12 @@ Twinkler_APA102C\ THUMB\ Debug/gd32f10x_enet.o: \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Firmware/Peripherals/inc/gd32f10x_enet.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Include/gd32f10x.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/libraries/CMSIS_6/CMSIS/Core/Include/core_cm3.h \
- /usr/share/crossworks_for_arm_5.3/include/stdint.h \
+ /usr/share/crossworks_for_arm_5.4/include/stdint.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/libraries/CMSIS_6/CMSIS/Core/Include/cmsis_version.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/libraries/CMSIS_6/CMSIS/Core/Include/cmsis_compiler.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/libraries/CMSIS_6/CMSIS/Core/Include/cmsis_gcc.h \
- /usr/share/crossworks_for_arm_5.3/include/arm_acle.h \
- /usr/share/crossworks_for_arm_5.3/include/gcc/arm_acle.h \
+ /usr/share/crossworks_for_arm_5.4/include/arm_acle.h \
+ /usr/share/crossworks_for_arm_5.4/include/gcc/arm_acle.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/libraries/CMSIS_6/CMSIS/Core/Include/m-profile/cmsis_gcc_m.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Include/system_gd32f10x.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Include/gd32f10x_libopt.h \
@@ -35,5 +35,5 @@ Twinkler_APA102C\ THUMB\ Debug/gd32f10x_enet.o: \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Firmware/Peripherals/inc/gd32f10x_timer.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Firmware/Peripherals/inc/gd32f10x_usart.h \
  /home/jennifer/.rowley_associates_limited/CrossWorks\ for\ ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Firmware/Peripherals/inc/gd32f10x_wwdgt.h \
- /usr/share/crossworks_for_arm_5.3/include/stdlib.h \
- /usr/share/crossworks_for_arm_5.3/include/__crossworks.h
+ /usr/share/crossworks_for_arm_5.4/include/stdlib.h \
+ /usr/share/crossworks_for_arm_5.4/include/__crossworks.h

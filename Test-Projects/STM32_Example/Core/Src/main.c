@@ -21,10 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-// Bit naughty putting my define here, but I'm trying to make our lives easier.
-#define STM32_HAL
+#include "APA102_hw_stm32_hal.h"
 #include "APA102.h"
-#include <cross_studio_io.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,7 +102,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-  for( i = 0; i < LED_BUFF_SZ; i++ )
+  for( i = 0; i < APA_GetBufferSize(); i++ )
     {
       APA_SetPixelHSV( i, 31, i+j, 210, 120 );
       j+=9;

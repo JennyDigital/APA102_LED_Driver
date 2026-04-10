@@ -43,12 +43,10 @@
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="Twinkler_APA102C_THUMB Release" sizeText="" addressText=""/>
  </Memory4>
  <Project>
-  <ProjectSessionItem path="Twinkler_APA102C"/>
-  <ProjectSessionItem path="Twinkler_APA102C;Twinkler_APA102C"/>
-  <ProjectSessionItem path="Twinkler_APA102C;Twinkler_APA102C;CMSIS Files"/>
-  <ProjectSessionItem path="Twinkler_APA102C;Twinkler_APA102C;Source Files"/>
-  <ProjectSessionItem path="Twinkler_APA102C;Twinkler_APA102C;Source Files;APA102"/>
-  <ProjectSessionItem path="Twinkler_APA102C;Twinkler_APA102C;System Files"/>
+  <ProjectSessionItem path=""/>
+  <ProjectSessionItem path=""/>
+  <ProjectSessionItem path=""/>
+  <SourceCodeControlLogin password="F9BB6682F5D56822" user="JennyDigital &lt;jennifer.a.gunn@outlook.com>"/>
  </Project>
  <Register1>
   <RegisterWindow visibleNodes="" binaryNodes="" asciiNodes="" openNodes="" name="STM32_F4VE_Playground_STM32_F4VE_Playground" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -107,11 +105,12 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="20" useTextEdit="1" path="main.c" left="0" top="7" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="3" y="22" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="14" y="3" useTextEdit="1" path="main.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="149" useTextEdit="1" path="../../APA102.c" left="0" top="147" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="90" useTextEdit="1" path="../../APA102.h" left="0" top="77" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="Twinkler_APA102C THUMB Debug/Twinkler_APA102C.ld" left="0" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="315" useTextEdit="1" path="../../../../.rowley_associates_limited/CrossWorks for ARM/v5/packages/targets/GD32F10x/CMSIS/Device/Include/gd32f10x.h" left="0" top="297" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../../APA102_hw_gd32_spl.h" left="0" top="0" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="Twinkler_APA102C" fileDialogDefaultFilter="*.c;*.h" autoConnectTarget="ST-LINK/V2-V3" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/jennifer/repos/APA102_LED_Driver" debugSearchPath="" autoConnectCapabilities="388991"/>
 </session>

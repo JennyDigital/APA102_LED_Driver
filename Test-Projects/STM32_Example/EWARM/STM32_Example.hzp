@@ -50,6 +50,7 @@
       c_preprocessor_definitions="USE_HAL_DRIVER;STM32F103xE;STARTUP_FROM_RESET"
       c_user_include_directories="./../Core/Inc;./../Drivers/STM32F1xx_HAL_Driver/Inc;./../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;./../Drivers/CMSIS/Device/ST/STM32F1xx/Include;./../Drivers/CMSIS/Include;./../../../"
       debug_register_definition_file="$(TargetsDir)/STM32/STM32F103_Peripherals.xml"
+      gcc_c_language_standard="c99"
       linker_memory_map_file="$(TargetsDir)/STM32/STM32F103RC_MemoryMap.xml"
       linker_section_placement_file="$(StudioDir)/targets/Cortex_M/flash_placement.xml"
       macros="DeviceVectorsFile=STM32F103xE.vec"
@@ -88,6 +89,9 @@
       <folder Name="APA102">
         <file file_name="../../../APA102.c" />
         <file file_name="../../../APA102.h" />
+        <file file_name="../../../APA102_hw_backend.h" />
+        <file file_name="../../../APA102_hw_stm32_hal.c" />
+        <file file_name="../../../APA102_hw_stm32_hal.h" />
       </folder>
       <folder Name="CMSIS">
         <file file_name="./../Core/Src/system_stm32f1xx.c" />

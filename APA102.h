@@ -25,22 +25,9 @@ SOFTWARE.
 #ifndef _APA102_H
 #define _APA102_H
 
-#ifdef GD32F10X_MD
-#define GD32_SPL
-#else
-#define STM32_HAL
-#endif
-
 #include <stdint.h>
 
-#ifdef GD32_SPL
-#include <gd32f10x.h>
-#endif
-
-#ifdef STM32_HAL
-#include "stm32f1xx.h"
-#endif
-// Set this to the amount of LEDs in the string.
+// Default amount of LEDs in the string.
 //
 #define LED_BUFF_SZ 30U
 
@@ -48,17 +35,9 @@ SOFTWARE.
 //
 #define APA_RANGE_CHECK
 
-// Set which SPI port you are using (for GD32) here.
+// Highest LED address (runtime value).
 //
-#ifdef GD32_SPL
-#define LED_SPI_PORT SPI0
-#endif
-
-// Highest LED address
-//
-#define MAX_LED ( LED_BUFF_SZ - 1 )
-
-#define APA_STOPS_TO_SEND ( (LED_BUFF_SZ + 1) / 2 < 2 ? 2 : (LED_BUFF_SZ + 1) / 2 )
+#define MAX_LED ( APA_GetBufferSize() - 1U )
 
 #define APA_BRIGHTNESS_MASK   0b11100000
 #define APA_BRIGHTNESS_MAX    31
@@ -113,7 +92,7 @@ typedef struct
 //
 typedef enum
 {
-  APA_OK, APA_out_of_range, APA_unknown_err
+  APA_OK, APA_out_of_range, APA_invalid_config, APA_unknown_err
 } APA_Status_t;
 
 typedef struct
@@ -145,6 +124,8 @@ typedef struct
 // Exported functions
 //
         void              APA_Init            ( void );
+        APA_Status_t      APA_SetBufferSize   ( uint16_t led_count );
+        uint16_t          APA_GetBufferSize   ( void );
         void              APA_sendBuffer      ( void );
         void              APA_Clear           ( void );
 
@@ -175,7 +156,7 @@ typedef struct
         led_pixelRGB_st   APA_GetPixelRGB     ( uint16_t pixel );
         led_pixelHSV_st   APA_GetPixelHSV     ( uint16_t pixel );
 
-        led_frame_st* APA_GetBufferPointer( void );
+        led_frame_st*     APA_GetBufferPointer( void );
 
         APA_Status_t      APA_SetPixelColour  ( uint16_t pixel, uint8_t intensity, APA_colour_st colour );
         APA_Status_t      APA_SetRangeColour  (

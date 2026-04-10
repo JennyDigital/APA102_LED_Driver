@@ -23,11 +23,13 @@ SOFTWARE.
 */
 
 #include "APA102.h"
+#include "APA102_hw_backend.h"
 #include <math.h>
 
 // Private variables
 //
 static led_frame_st  led_buffer[ LED_BUFF_SZ ]   = { 0 };
+static uint16_t      led_count                   = LED_BUFF_SZ;
 static led_frame_st  startSignal                 = { 0 };
 static led_frame_st  stopSignal                  = { 0xFF, 0xFF, 0xFF, 0xFF };
 
@@ -52,21 +54,21 @@ static const uint8_t gamma_table[256] = {
 };
 #endif
 
-#ifdef STM32_HAL
-// This will need setting to whichever SPI port you are using
-// ...also referenced in SPI_Blocksend.
-//
-extern SPI_HandleTypeDef hspi1;
-#endif
-
-
 /* Private functions */
-static  void          SPI_BlockSend       ( uint8_t * data, uint16_t length );
 static  void          sendStop            ( void );
 static  void          sendStart           ( void );
+static  uint16_t      getStopFrames       ( void );
 #ifdef APA_GAMMA_CORRECT
 static  uint8_t       applyGamma          ( uint8_t value );
 #endif
+
+
+static uint16_t getStopFrames( void )
+{
+  uint16_t stop_frames = ( led_count + 1U ) / 2U;
+
+  return ( stop_frames < 2U ) ? 2U : stop_frames;
+}
 
 
 /** Send the start signal to the LED string
@@ -76,7 +78,7 @@ static  uint8_t       applyGamma          ( uint8_t value );
   */
 static void sendStart( void )
 {
-  SPI_BlockSend( &startSignal.master_bright, 4 );
+  APA_HW_SPI_BlockSend( &startSignal.master_bright, 4 );
 }
 
 
@@ -87,45 +89,10 @@ static void sendStart( void )
   */
 static void sendStop( void )
 {
-  for(  uint8_t num_of_stops = APA_STOPS_TO_SEND; num_of_stops > 0; num_of_stops-- )
+  for( uint16_t num_of_stops = getStopFrames(); num_of_stops > 0; num_of_stops-- )
   {
-    SPI_BlockSend( &stopSignal.master_bright, 4 );
+    APA_HW_SPI_BlockSend( &stopSignal.master_bright, 4 );
   } 
-}
-
-
-/** Transmit multiple uint8_ts of data as a block.
-  *
-  * param:  uint8_t *data.  This is the start of the block of data.
-  * param:  uint16_t length.  The quantity of byttes to be transmitted
-  * retval: none
-  *
-  */
-static void SPI_BlockSend( uint8_t * data, uint16_t length )
-{
-#ifdef GD32_SPL
-  uint16_t value;
-  
-  for( uint16_t count = 0; count < length; count++ )
-  {
-    value = (uint16_t) (*data);
-
-    data++;
-
-    spi_i2s_data_transmit( LED_SPI_PORT, value );
-
-    // We use this flag because we aren't receiving anything.
-    //
-    while( spi_i2s_flag_get( LED_SPI_PORT, SPI_FLAG_TBE ) == RESET );
-  }
-#endif
-
-#ifdef STM32_HAL
-  // Please note that if you wish to use another SPI port this will need changing.
-  //
-  HAL_SPI_Transmit( &hspi1, data, length, 100 );
-#endif
-
 }
 
 #ifdef APA_GAMMA_CORRECT
@@ -146,8 +113,37 @@ static uint8_t applyGamma( uint8_t value )
   */
 void APA_Init( void )
 {
-  APA_SetRange( 0, MAX_LED, 31, 0, 0, 0 );
+  APA_SetRange( 0, led_count - 1U, 31, 0, 0, 0 );
   APA_sendBuffer();
+}
+
+
+/** Set the buffer size for the APA102C LED string
+  *
+  * param:  uint16_t led_count_new. The new buffer size.
+  * retval: APA_Status_t
+  */
+APA_Status_t APA_SetBufferSize( uint16_t led_count_new )
+{
+  if ( ( led_count_new == 0U ) || ( led_count_new > LED_BUFF_SZ ) )
+  {
+    return APA_invalid_config;
+  }
+
+  led_count = led_count_new;
+
+  return APA_OK;
+}
+
+
+/** Get the current buffer size for the APA102C LED string
+  *
+  * param:  none
+  * retval: uint16_t. The current buffer size.
+  */
+uint16_t APA_GetBufferSize( void )
+{
+  return led_count;
 }
 
 
@@ -159,7 +155,7 @@ void APA_Init( void )
 void APA_sendBuffer( void )
 {
   sendStart();
-  SPI_BlockSend( &led_buffer[0].master_bright, sizeof( led_buffer ) );
+  APA_HW_SPI_BlockSend( &led_buffer[0].master_bright, led_count * sizeof( led_frame_st ) );
   sendStop();
 }
 
@@ -171,7 +167,7 @@ void APA_sendBuffer( void )
 */
 void APA_Clear( void )
 {
-  APA_SetRange( 0, MAX_LED, 31, 0, 0, 0 );
+  APA_SetRange( 0, led_count - 1U, 31, 0, 0, 0 );
   APA_sendBuffer();
 }
 
@@ -188,7 +184,7 @@ void APA_Clear( void )
 APA_Status_t APA_SetPixel ( uint8_t pixel, uint8_t intensity, uint8_t red, uint8_t green, uint8_t blue  )
 {
 #ifdef APA_RANGE_CHECK
-  if ( pixel > MAX_LED )
+  if ( pixel >= led_count )
   {
     return APA_out_of_range;
   }
@@ -228,8 +224,8 @@ APA_Status_t APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intens
                            uint8_t red, uint8_t green, uint8_t blue )
 {
 #ifdef APA_RANGE_CHECK
-  if (  ( st_pixel  > MAX_LED )   ||
-        ( end_pixel > MAX_LED )   ||
+  if (  ( st_pixel  >= led_count )   ||
+        ( end_pixel >= led_count )   ||
         ( st_pixel  > end_pixel )
      )
   {
@@ -277,7 +273,7 @@ APA_Status_t APA_SetRange( uint16_t st_pixel, uint16_t end_pixel, uint8_t intens
 APA_Status_t APA_SetPixelHSV( uint16_t pixel, uint8_t intensity, uint8_t hue, uint8_t sat, uint8_t vel )
 {
 #ifdef APA_RANGE_CHECK
-  if ( pixel > MAX_LED ) return APA_out_of_range;
+  if ( pixel >= led_count ) return APA_out_of_range;
   /* Limit brightness raqnge */
   if ( intensity > APA_BRIGHTNESS_MAX )
   {
@@ -311,8 +307,8 @@ APA_Status_t APA_SetPixelRangeHSV( uint16_t st_pixel, uint16_t end_pixel, uint8_
 {
 #ifdef APA_RANGE_CHECK
   if( 
-      ( st_pixel > MAX_LED )    || 
-      ( end_pixel > MAX_LED )   ||
+      ( st_pixel >= led_count )    || 
+      ( end_pixel >= led_count )   ||
       ( st_pixel  > end_pixel )
     ) {
         return APA_out_of_range;
@@ -339,7 +335,7 @@ led_pixelRGB_st APA_GetPixelRGB( uint16_t pixel )
   led_pixelRGB_st working_pixel = {0};
 
 #ifdef APA_RANGE_CHECK
-  if ( pixel > MAX_LED  )
+  if ( pixel >= led_count  )
   {
     return working_pixel;
   }
@@ -352,6 +348,7 @@ led_pixelRGB_st APA_GetPixelRGB( uint16_t pixel )
   return working_pixel;
 }
 
+
 /* Get pixel parameters from the buffer in HSV format 
  * param: uint16_t pixel.  The pixel to get.
  * retval: led_pixelHSV_st.  The structure containing the pixel's data. 
@@ -359,7 +356,7 @@ led_pixelRGB_st APA_GetPixelRGB( uint16_t pixel )
 led_pixelHSV_st APA_GetPixelHSV( uint16_t pixel )
 {
 #ifdef APA_RANGE_CHECK
-  if ( pixel > MAX_LED  )
+  if ( pixel >= led_count  )
   {
     led_pixelHSV_st invalid = {0};
     return invalid;

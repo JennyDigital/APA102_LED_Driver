@@ -1,10 +1,10 @@
 # ✨ APA102_LED_Driver
 
-> A lightweight, efficient LED driver library for APA102 (DotStar) addressable LEDs. Supports STM32 (HAL) and GD32 (SPL) microcontrollers.
+> A lightweight, efficient LED driver library for APA102 (DotStar) addressable LEDs. Supports STM32 (HAL), GD32 (SPL), and Raspberry Pi Pico (RP2040 SDK).
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Language](https://img.shields.io/badge/language-C-blue.svg)
-![MCU](https://img.shields.io/badge/MCU-STM32%20%7C%20GD32-brightgreen.svg)
+![MCU](https://img.shields.io/badge/MCU-STM32%20%7C%20GD32%20%7C%20RP2040-brightgreen.svg)
 
 **Bring your projects to life with stunning addressable LED effects!** 🌈
 
@@ -17,7 +17,9 @@
 5. [API Reference](#api-reference)
 6. [Usage Examples](#usage-examples)
 7. [Colour Palettes](#colour-palettes)
-8. [Advanced Features](#advanced-features)
+8. [Migration Notes](#migration-notes)
+9. [Advanced Features](#advanced-features)
+10. [Changelog](#changelog)
 
 ---
 
@@ -44,9 +46,11 @@
 ## ⚡ Quick Start
 
 ```c
+#include "APA102_hw_stm32_hal.h"
 #include "APA102.h"
 
 int main(void) {
+    APA_SetBufferSize(10);                     // Optional runtime LED count (1..LED_BUFF_SZ)
     APA_Init();                              // Initialize
     APA_SetPixel(0, 31, 255, 0, 0);         // Set first LED to red
     APA_SetRange(1, 9, 31, 0, 0, 255);      // Set LEDs 1-9 to blue
@@ -72,6 +76,7 @@ The APA102 (also known as DotStar) LED has the following protocol:
 |----------|---------|-------|
 | **STM32** | HAL | Tested with STM32F1 series |
 | **GD32** | SPL | Tested with GD32F10x series |
+| **RP2040 (Pico)** | Pico SDK | Uses `hardware/spi.h` (`spi_write_blocking`) |
 | **SPI Speed** | ≤10MHz | Essential for reliable communication |
 
 ### 🔌 Wiring Diagram
@@ -89,10 +94,13 @@ SCK          ──→  CI  (Clock In)
 
 ## Installation
 
-1. ✅ Copy `APA102.h` and `APA102.c` into your project
-2. ✅ Include `APA102.h` in your source files
+1. ✅ Copy `APA102.h`, `APA102.c`, `APA102_hw_backend.h`, and one hardware backend pair into your project:
+    - STM32 HAL: `APA102_hw_stm32_hal.h` + `APA102_hw_stm32_hal.c`
+    - GD32 SPL: `APA102_hw_gd32_spl.h` + `APA102_hw_gd32_spl.c`
+    - RP2040 Pico SDK: `APA102_hw_rp2040_pico.h` + `APA102_hw_rp2040_pico.c`
+2. ✅ Include the hardware header before `APA102.h` in your source files
 3. ✅ Configure your SPI peripheral in your MCU's initialization code
-4. ✅ Set `LED_BUFF_SZ` to match your LED count
+4. ✅ (Optional) Set `LED_BUFF_SZ` for your default build-time capacity
 
 ---
 
@@ -106,25 +114,57 @@ All configuration is done in `APA102.h`:
 #define LED_BUFF_SZ 30U
 ```
 
-Set this to the number of LEDs in your strip. This is used for both the internal buffer size and automatic stop frame calculation.
+Set this to the default number of LEDs in your strip.
+
+At runtime, change the active LED count with:
+
+```c
+if (APA_SetBufferSize(60) != APA_OK) {
+    // Handle invalid runtime size request.
+}
+APA_Init();              // Clear/send using the active runtime size
+```
+
+`APA_SetBufferSize()` accepts values in the range `1..LED_BUFF_SZ`.
 
 #### 🖥️ Platform Selection
 
 ```c
-// For GD32 (uncomment GD32F10X_MD in your build system)
-#ifdef GD32F10X_MD
-#define GD32_SPL
-#else
-#define STM32_HAL
-#endif
+// STM32 HAL
+#include "APA102_hw_stm32_hal.h"
+#include "APA102.h"
 ```
 
-For GD32, also specify the SPI port:
+```c
+// GD32 SPL
+#include "APA102_hw_gd32_spl.h"
+#include "APA102.h"
+```
+
+```c
+// Raspberry Pi Pico (RP2040 SDK)
+#include "APA102_hw_rp2040_pico.h"
+#include "APA102.h"
+```
+
+For GD32, set the SPI port if you do not want the default `SPI0`:
 ```c
 #define LED_SPI_PORT SPI0
 ```
 
-For STM32, ensure `hspi1` (or your chosen SPI handle) is declared as `extern`.
+For STM32, `hspi1` is used by default. To use a different SPI handle:
+```c
+#define APA102_STM32_SPI_HANDLE hspi2
+#include "APA102_hw_stm32_hal.h"
+#include "APA102.h"
+```
+
+For RP2040, `spi0` is used by default. To use `spi1`:
+```c
+#define APA102_PICO_SPI_PORT spi1
+#include "APA102_hw_rp2040_pico.h"
+#include "APA102.h"
+```
 
 #### 🎮 GD32 SPI Peripheral Setup
 
@@ -193,6 +233,14 @@ Enable for smoother LED gradients. The gamma value can be adjusted (common value
 
 Initialises the LED buffer and sends an initial frame. Call this before using any other functions.
 
+#### `APA_Status_t APA_SetBufferSize(uint16_t led_count)` ⚙️
+
+Sets the active runtime LED count. Must be called before `APA_Init()` (or before pixel operations) if you want a size other than the default.
+
+#### `uint16_t APA_GetBufferSize(void)` 📏
+
+Returns the currently active runtime LED count.
+
 #### `void APA_Clear(void)` 🟡
 
 Turns off all LEDs and sends the frame immediately.
@@ -211,7 +259,7 @@ Sets a single pixel. Does not send automatically.
 
 | Parameter | Range | Description |
 |-----------|-------|-------------|
-| `pixel` | 0 to LED_BUFF_SZ-1 | LED index |
+| `pixel` | 0 to APA_GetBufferSize()-1 | LED index |
 | `intensity` | 0-31 | Global brightness |
 | `red` | 0-255 | Red intensity |
 | `green` | 0-255 | Green intensity |
@@ -225,8 +273,8 @@ Sets a range of pixels to the same colour.
 
 | Parameter | Range | Description |
 |-----------|-------|-------------|
-| `st_pixel` | 0 to LED_BUFF_SZ-1 | Starting LED index |
-| `end_pixel` | st_pixel to LED_BUFF_SZ-1 | Ending LED index |
+| `st_pixel` | 0 to APA_GetBufferSize()-1 | Starting LED index |
+| `end_pixel` | st_pixel to APA_GetBufferSize()-1 | Ending LED index |
 | `intensity` | 0-31 | Global brightness |
 | `red`, `green`, `blue` | 0-255 | Colour values |
 
@@ -242,7 +290,7 @@ Sets a single pixel using HSV colourspace.
 
 | Parameter | Range | Description |
 |-----------|-------|-------------|
-| `pixel` | 0 to LED_BUFF_SZ-1 | LED index |
+| `pixel` | 0 to APA_GetBufferSize()-1 | LED index |
 | `intensity` | 0-31 | Global brightness (hardware) |
 | `hue` | 0-255 | Colour (0=red, 43=green, 85=blue, 128=cyan, 170=magenta, 213=red) |
 | `sat` | 0-255 | Saturation (0=white, 255=full colour) |
@@ -309,9 +357,9 @@ led_frame_st* buffer = APA_GetBufferPointer();
 
 ```c
 // Initialise the driver
+APA_SetBufferSize(30);  // Optional runtime configuration
 APA_Init();
 
-// Set first LED to red at full brightness
 APA_SetPixel(0, 31, 255, 0, 0);
 
 // Set LEDs 5-10 to blue
@@ -323,7 +371,6 @@ APA_sendBuffer();
 
 ### 🎨 Using Colour Palettes
 
-```c
 // Set pixel to a named colour
 APA_SetPixelColour(0, 31, APA_COLOUR_GREEN);
 
@@ -339,8 +386,9 @@ APA_SetPixelColour(15, 31, orange);
 
 ```c
 // Create a rainbow across all LEDs
-for (uint16_t i = 0; i <= MAX_LED; i++) {
-    uint8_t hue = (i * 256) / (MAX_LED + 1);  // Distribute hue evenly
+uint16_t led_count = APA_GetBufferSize();
+for (uint16_t i = 0; i < led_count; i++) {
+    uint8_t hue = (i * 256) / led_count;  // Distribute hue evenly
     APA_SetPixelHSV(i, 31, hue, 255, 255);
 }
 APA_sendBuffer();
@@ -368,7 +416,7 @@ for (int i = 31; i >= 0; i--) {
 // Direct manipulation for performance
 led_frame_st* buf = APA_GetBufferPointer();
 
-for (uint16_t i = 0; i <= MAX_LED; i++) {
+for (uint16_t i = 0; i < APA_GetBufferSize(); i++) {
     buf[i].master_bright = 31 | 0b11100000;
     buf[i].red = i * 8;      // Gradient red
     buf[i].green = 0;
@@ -411,6 +459,32 @@ Define your own using the `APA_colour_st` struct:
 ```c
 APA_colour_st myColour = {R, G, B};  // Values 0-255 each
 APA_SetPixelColour(pixel, intensity, myColour);
+```
+
+---
+
+## Migration Notes
+
+If you are upgrading from a fixed-size-only integration, use the following checklist:
+
+1. Keep `LED_BUFF_SZ` in `APA102.h` as your compile-time maximum capacity.
+2. Set your active strip length at runtime with `APA_SetBufferSize()` before `APA_Init()`.
+3. If your code loops using fixed bounds (`LED_BUFF_SZ` or literal values), switch to `APA_GetBufferSize()` for runtime-safe loops.
+4. Handle `APA_invalid_config` from `APA_SetBufferSize()` when the requested size is outside `1..LED_BUFF_SZ`.
+5. Ensure `APA102_hw_backend.h` is included in your project files together with the selected hardware backend pair.
+
+Example migration pattern:
+
+```c
+if (APA_SetBufferSize(actual_led_count) != APA_OK) {
+    // Fallback to a safe value or signal configuration error.
+}
+APA_Init();
+
+for (uint16_t i = 0; i < APA_GetBufferSize(); i++) {
+    APA_SetPixel(i, 31, 0, 0, 0);
+}
+APA_sendBuffer();
 ```
 
 ---
@@ -459,6 +533,7 @@ All functions that return `APA_Status_t` return one of:
 |-------|---------|
 | `APA_OK` | Operation successful |
 | `APA_out_of_range` | Pixel index outside valid range |
+| `APA_invalid_config` | Invalid configuration value (for example, `APA_SetBufferSize()` out of range) |
 | `APA_unknown_err` | Unexpected error occurred |
 
 ---
@@ -466,6 +541,10 @@ All functions that return `APA_Status_t` return one of:
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history and API changes.
 
 ---
 
