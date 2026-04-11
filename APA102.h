@@ -92,7 +92,10 @@ typedef struct
 //
 typedef enum
 {
-  APA_OK, APA_out_of_range, APA_invalid_config, APA_unknown_err
+  APA_OK, APA_out_of_range,
+  APA_invalid_config,
+  APA_unknown_err
+  
 } APA_Status_t;
 
 typedef struct
@@ -100,17 +103,18 @@ typedef struct
   uint8_t red;
   uint8_t green;
   uint8_t blue;
+
 } APA_colour_st;
 
-#define APA_COLOUR_BLACK   { 0,   0,   0  }
+#define APA_COLOUR_BLACK   { 0,   0,   0   }
 #define APA_COLOUR_WHITE   { 255, 255, 255 }
-#define APA_COLOUR_RED     { 255, 0,   0  }
+#define APA_COLOUR_RED     { 255, 0,   0   }
 #define APA_COLOUR_GREEN   { 0,   255, 0   }
 #define APA_COLOUR_BLUE    { 0,   0,   255 }
-#define APA_COLOUR_YELLOW  { 255, 255, 0  }
+#define APA_COLOUR_YELLOW  { 255, 255, 0   }
 #define APA_COLOUR_CYAN    { 0,   255, 255 }
 #define APA_COLOUR_MAGENTA { 255, 0,   255 }
-#define APA_COLOUR_ORANGE  { 255, 165, 0  }
+#define APA_COLOUR_ORANGE  { 255, 165, 0   }
 #define APA_COLOUR_PURPLE  { 128, 0,   128 }
 #define APA_COLOUR_PINK    { 255, 192, 203 }
 #define APA_COLOUR_LIME    { 0,   255, 0   }

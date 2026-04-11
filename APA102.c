@@ -63,6 +63,11 @@ static  uint8_t       applyGamma          ( uint8_t value );
 #endif
 
 
+/** Get the number of stop bytes required for the APA102 end-frame
+  *
+  * param:  none
+  * retval: uint16_t. The number of stop bytes.
+  */
 static uint16_t getStopBytes( void )
 {
   /* APA102 end-frame needs at least led_count / 2 clock pulses.
@@ -101,6 +106,12 @@ static void sendStop( void )
   } 
 }
 
+
+/** Apply gamma correction to a value
+  *
+  * param:  uint8_t value. The value to apply gamma correction to.
+  * retval: uint8_t. The gamma-corrected value.
+  */
 #ifdef APA_GAMMA_CORRECT
 static uint8_t applyGamma( uint8_t value )
 {
@@ -518,12 +529,27 @@ led_frame_st* APA_GetBufferPointer ( void )
 }
 
 
+/** Set the colour of a specific pixel
+  *
+  * param: uint16_t pixel. The pixel to set.
+  * param: uint8_t intensity. The intensity of the pixel.
+  * param: APA_colour_st colour. The colour to set.
+  * retval: APA_Status_t. The status of the operation.
+  */
 APA_Status_t APA_SetPixelColour( uint16_t pixel, uint8_t intensity, APA_colour_st colour )
 {
   return APA_SetPixel( pixel, intensity, colour.red, colour.green, colour.blue );
 }
 
 
+/** Set the colour of a range of pixels
+  *
+  * param: uint16_t st_pixel. The start pixel of the range.
+  * param: uint16_t end_pixel. The end pixel of the range.
+  * param: uint8_t intensity. The intensity of the pixels.
+  * param: APA_colour_st colour. The colour to set.
+  * retval: APA_Status_t. The status of the operation.
+  */
 APA_Status_t APA_SetRangeColour( uint16_t st_pixel, uint16_t end_pixel, uint8_t intensity, APA_colour_st colour )
 {
   return APA_SetRange( st_pixel, end_pixel, intensity, colour.red, colour.green, colour.blue );
