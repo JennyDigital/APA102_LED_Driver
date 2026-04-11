@@ -1,0 +1,11 @@
+{
+    "cmake.sourceDirectory": "/home/jennifer/repos/APA102_LED_Driver/Test-Projects/Pico_Example",
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/Test-Projects/Pico_Example/build/compile_commands.json",
+    "C_Cpp.default.compilerPath": "/home/jennifer/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-gcc",
+    "C_Cpp.default.intelliSenseMode": "gcc-arm",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/**",
+        "${env:PICO_SDK_PATH}/**"
+    ]
+}

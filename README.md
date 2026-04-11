@@ -353,6 +353,8 @@ led_frame_st* buffer = APA_GetBufferPointer();
 
 ## Usage Examples
 
+Reference projects are available under `Test-Projects/`, including STM32, GD32, and RP2040/Pico builds.
+
 ### 🚀 Basic Usage
 
 ```c
@@ -425,6 +427,12 @@ for (uint16_t i = 0; i < APA_GetBufferSize(); i++) {
 
 APA_sendBuffer();
 ```
+
+### 🧪 Reference Projects
+
+- `Test-Projects/STM32_Example/`: STM32 HAL integration example.
+- `Test-Projects/Twinkler/`: GD32 SPL integration example.
+- `Test-Projects/Pico_Example/`: Raspberry Pi Pico SDK example using the local repository copies of `APA102.c` and `APA102_hw_rp2040_pico.c`.
 
 ---
 

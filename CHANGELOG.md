@@ -11,6 +11,7 @@ The format is based on Keep a Changelog.
   - `APA_SetBufferSize(uint16_t led_count)`
   - `APA_GetBufferSize(void)`
 - New status code `APA_invalid_config` for invalid runtime configuration requests.
+- RP2040/Pico SDK reference project under `Test-Projects/Pico_Example/` that builds against the local repository copies of `APA102.c` and `APA102_hw_rp2040_pico.c`.
 
 ### Changed
 - Core driver now applies runtime LED count for:
