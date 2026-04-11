@@ -31,7 +31,7 @@ SOFTWARE.
 static led_frame_st  led_buffer[ LED_BUFF_SZ ]   = { 0 };
 static uint16_t      led_count                   = LED_BUFF_SZ;
 static led_frame_st  startSignal                 = { 0 };
-static led_frame_st  stopSignal                  = { 0xFF, 0xFF, 0xFF, 0xFF };
+static uint8_t       stopSignal                  = 0x00;
 
 #ifdef APA_GAMMA_CORRECT
 static const uint8_t gamma_table[256] = {
@@ -57,17 +57,20 @@ static const uint8_t gamma_table[256] = {
 /* Private functions */
 static  void          sendStop            ( void );
 static  void          sendStart           ( void );
-static  uint16_t      getStopFrames       ( void );
+static  uint16_t      getStopBytes        ( void );
 #ifdef APA_GAMMA_CORRECT
 static  uint8_t       applyGamma          ( uint8_t value );
 #endif
 
 
-static uint16_t getStopFrames( void )
+static uint16_t getStopBytes( void )
 {
-  uint16_t stop_frames = ( led_count + 1U ) / 2U;
+  /* APA102 end-frame needs at least led_count / 2 clock pulses.
+   * Convert required bits to whole bytes: ceil((led_count / 2) / 8) == ceil(led_count / 16).
+   */
+  uint16_t stop_bytes = ( led_count + 15U ) / 16U;
 
-  return ( stop_frames < 2U ) ? 2U : stop_frames;
+  return ( stop_bytes < 1U ) ? 1U : stop_bytes;
 }
 
 
@@ -89,9 +92,12 @@ static void sendStart( void )
   */
 static void sendStop( void )
 {
-  for( uint16_t num_of_stops = getStopFrames(); num_of_stops > 0; num_of_stops-- )
+  /* Tail clocks are sent with data low to avoid forming a valid partial pixel frame
+   * on downstream chained strips when updates repeat.
+   */
+  for( uint16_t num_of_stops = getStopBytes(); num_of_stops > 0; num_of_stops-- )
   {
-    APA_HW_SPI_BlockSend( &stopSignal.master_bright, 4 );
+    APA_HW_SPI_BlockSend( &stopSignal, 1 );
   } 
 }
 

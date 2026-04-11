@@ -68,7 +68,7 @@ int main(void) {
 The APA102 (also known as DotStar) LED has the following protocol:
 - 4-byte frame per LED: Global brightness (5 bits) + Blue + Green + Red
 - Start frame: 32 bits of zeros
-- End frame: minimum 36 bits of ones (automatically calculated)
+- End frame: at least N/2 clock pulses for N LEDs (automatically calculated, sent with data low)
 
 ### 🎮 Microcontroller
 

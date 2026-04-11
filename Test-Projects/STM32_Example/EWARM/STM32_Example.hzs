@@ -73,10 +73,10 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="27" y="113" useTextEdit="1" path="../Core/Src/main.c" left="0" selected="1" top="67" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="97" useTextEdit="1" path="../Core/Src/main.c" left="0" selected="1" top="75" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="381" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c" left="0" top="368" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="277" useTextEdit="1" path="../../../APA102.c" left="0" top="242" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="169" useTextEdit="1" path="../../../APA102.h" left="0" top="134" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="277" useTextEdit="1" path="../../../APA102.c" left="0" top="253" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="169" useTextEdit="1" path="../../../APA102.h" left="0" top="145" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="896" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c" left="0" top="883" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../Core/Inc/main.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="177" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c" left="0" top="177" codecName="Default"/>

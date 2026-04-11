@@ -21,6 +21,10 @@ The format is based on Keep a Changelog.
 - `MAX_LED` now resolves from runtime count (`APA_GetBufferSize() - 1`).
 - Documentation updated for runtime-size workflows and backend split integration.
 
+### Fixed
+- APA102 end-frame generation now uses byte-accurate tail clock calculation (`ceil(led_count / 16)`) instead of oversized 32-bit stop-frame blocks.
+- Tail clock bytes are now sent with data low (`0x00`) to avoid downstream chained-strip ghost pixels when the configured logical length is shorter than the physical chain.
+
 ### Migration
 - Existing code that iterates to `LED_BUFF_SZ` should move to `APA_GetBufferSize()` for runtime-safe loops.
 - `LED_BUFF_SZ` remains the compile-time maximum buffer capacity.
