@@ -5,11 +5,10 @@
 
 volatile  uint32_t  systick_counter = 0;
 
-          uint32_t  blue_ph         = 0;
-          uint32_t  green_ph        = 10000;
-          uint32_t  red_ph          = 20000;
-          uint8_t   col;
-          uint8_t   j               = 0;
+/* Colour effect variables */
+          uint16_t  i               = 0;
+          uint8_t   j               = 1;
+          uint8_t   q               = 9;
 
 
 static void GPIO_InitPins ( void );
@@ -32,14 +31,21 @@ int main( void )
 
   while( TRUE )
   {
-    for( i = 0; i < APA_GetBufferSize(); i++ )
-    {
-      APA_SetPixelHSV( i, 31, i+j, 210, 120 );
-      j+=9;
+    for (i = 0; i < LED_BUFF_SZ; i++) {
+      uint8_t hue = (uint8_t)( ( i * 5 ) + j );
+      APA_SetPixelHSV( (uint16_t)i, 20, hue, 255, 120 );
     }
+    
+    /* Send the updated LED colors to the APA102 LEDs and wait a while */
     APA_sendBuffer();
-    delay_ms( 35 );
-    j-=2;
+    delay_ms( 5 );
+
+    /* Update the hue for the next loop */
+    q++;
+    if ( q >= 2 ) {
+      q = 0;
+      j = ( j + 1 ) & 0xFF;
+    }
   }  
 }
 

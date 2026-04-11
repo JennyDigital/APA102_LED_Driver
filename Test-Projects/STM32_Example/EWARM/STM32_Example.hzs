@@ -73,7 +73,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="97" useTextEdit="1" path="../Core/Src/main.c" left="0" selected="1" top="75" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="100" useTextEdit="1" path="../Core/Src/main.c" left="0" selected="1" top="54" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="381" useTextEdit="1" path="../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c" left="0" top="368" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="277" useTextEdit="1" path="../../../APA102.c" left="0" top="253" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="169" useTextEdit="1" path="../../../APA102.h" left="0" top="145" codecName="Default"/>

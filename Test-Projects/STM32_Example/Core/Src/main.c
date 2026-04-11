@@ -69,6 +69,9 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 
+    uint16_t i  = 0;
+    uint8_t j   = 1;
+    uint8_t q   = 9;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -94,22 +97,30 @@ int main(void)
   /* USER CODE BEGIN 2 */
   APA_Init();
 
-  int i = 0, j = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+  
+    /* Update the LED colors */
+   for (i = 0; i < LED_BUFF_SZ; i++) {
+            uint8_t hue = (uint8_t)( ( i * 5 ) + j );
+            APA_SetPixelHSV( (uint16_t)i, 20, hue, 255, 120 );
+        }
+        /* Send the updated LED colors to the APA102 LEDs and wait a while */
+        APA_sendBuffer();
+        HAL_Delay( 5 );
+
+        /* Update the hue for the next loop */
+        q++;
+        if ( q >= 2 ) {
+            q = 0;
+            j = ( j + 1 ) & 0xFF;
+        }
     /* USER CODE END WHILE */
-  for( i = 0; i < APA_GetBufferSize(); i++ )
-    {
-      APA_SetPixelHSV( i, 31, i+j, 210, 120 );
-      j+=9;
-    }
-    APA_sendBuffer();
-    HAL_Delay( 35 );
-    j-=2;
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

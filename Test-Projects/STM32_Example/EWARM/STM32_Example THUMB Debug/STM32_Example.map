@@ -211,6 +211,8 @@ Discarded input sections
  .bss           0x00000000        0x0 STM32_Example THUMB Debug/APA102.o
  .text.APA_SetBufferSize
                 0x00000000       0x30 STM32_Example THUMB Debug/APA102.o
+ .text.APA_GetBufferSize
+                0x00000000        0xc STM32_Example THUMB Debug/APA102.o
  .text.APA_Clear
                 0x00000000       0x2c STM32_Example THUMB Debug/APA102.o
  .text.APA_SetPixelRangeHSV
@@ -4348,7 +4350,7 @@ Linker script and memory map
                 0x00000001                        . = ASSERT (((__init_rodata_start__ == __init_rodata_end__) || ((__init_rodata_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .init_rodata is too large to fit in FLASH memory segment)
                 0x08000344                        __text_load_start__ = ALIGN (__init_rodata_end__, 0x4)
 
-.text           0x08000344     0x1b7c
+.text           0x08000344     0x1ba4
                 0x08000344                        __text_start__ = .
  *(.text .text.* .gnu.linkonce.t.* .glue_7t .glue_7 .gcc_except_table .ARM.extab* .gnu.linkonce.armextab.*)
  .glue_7        0x08000344        0x0 linker stubs
@@ -4357,153 +4359,150 @@ Linker script and memory map
                 0x08000344       0x50 STM32_Example THUMB Debug/main.o
  .text.SysTick_Config
                 0x08000394       0x40 STM32_Example THUMB Debug/main.o
- .text.main     0x080003d4       0x8c STM32_Example THUMB Debug/main.o
+ .text.main     0x080003d4       0xbc STM32_Example THUMB Debug/main.o
                 0x080003d4                main
  .text.SystemClock_Config
-                0x08000460       0x78 STM32_Example THUMB Debug/main.o
-                0x08000460                SystemClock_Config
+                0x08000490       0x78 STM32_Example THUMB Debug/main.o
+                0x08000490                SystemClock_Config
  .text.MX_SPI1_Init
-                0x080004d8       0x6c STM32_Example THUMB Debug/main.o
+                0x08000508       0x6c STM32_Example THUMB Debug/main.o
  .text.MX_GPIO_Init
-                0x08000544       0x3c STM32_Example THUMB Debug/main.o
+                0x08000574       0x3c STM32_Example THUMB Debug/main.o
  .text.Error_Handler
-                0x08000580        0x6 STM32_Example THUMB Debug/main.o
-                0x08000580                Error_Handler
- *fill*         0x08000586        0x2 
+                0x080005b0        0x6 STM32_Example THUMB Debug/main.o
+                0x080005b0                Error_Handler
+ *fill*         0x080005b6        0x2 
  .text.HAL_MspInit
-                0x08000588       0x5c STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
-                0x08000588                HAL_MspInit
+                0x080005b8       0x5c STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+                0x080005b8                HAL_MspInit
  .text.HAL_SPI_MspInit
-                0x080005e4       0x94 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
-                0x080005e4                HAL_SPI_MspInit
+                0x08000614       0x94 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+                0x08000614                HAL_SPI_MspInit
  .text.NMI_Handler
-                0x08000678        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x08000678                NMI_Handler
+                0x080006a8        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006a8                NMI_Handler
  .text.HardFault_Handler
-                0x0800067a        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x0800067a                HardFault_Handler
+                0x080006aa        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006aa                HardFault_Handler
  .text.MemManage_Handler
-                0x0800067c        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x0800067c                MemManage_Handler
+                0x080006ac        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006ac                MemManage_Handler
  .text.BusFault_Handler
-                0x0800067e        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x0800067e                BusFault_Handler
+                0x080006ae        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006ae                BusFault_Handler
  .text.UsageFault_Handler
-                0x08000680        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x08000680                UsageFault_Handler
+                0x080006b0        0x2 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006b0                UsageFault_Handler
  .text.SVC_Handler
-                0x08000682        0x4 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x08000682                SVC_Handler
+                0x080006b2        0x4 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006b2                SVC_Handler
  .text.DebugMon_Handler
-                0x08000686        0x4 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x08000686                DebugMon_Handler
+                0x080006b6        0x4 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006b6                DebugMon_Handler
  .text.PendSV_Handler
-                0x0800068a        0x4 STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x0800068a                PendSV_Handler
+                0x080006ba        0x4 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006ba                PendSV_Handler
  .text.SysTick_Handler
-                0x0800068e        0xa STM32_Example THUMB Debug/stm32f1xx_it.o
-                0x0800068e                SysTick_Handler
- .text.getStopFrames
-                0x08000698       0x24 STM32_Example THUMB Debug/APA102.o
+                0x080006be        0xa STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x080006be                SysTick_Handler
+ .text.getStopBytes
+                0x080006c8       0x28 STM32_Example THUMB Debug/APA102.o
  .text.sendStart
-                0x080006bc       0x14 STM32_Example THUMB Debug/APA102.o
+                0x080006f0       0x14 STM32_Example THUMB Debug/APA102.o
  .text.sendStop
-                0x080006d0       0x38 STM32_Example THUMB Debug/APA102.o
+                0x08000704       0x38 STM32_Example THUMB Debug/APA102.o
  .text.APA_Init
-                0x08000708       0x2c STM32_Example THUMB Debug/APA102.o
-                0x08000708                APA_Init
- .text.APA_GetBufferSize
-                0x08000734        0xc STM32_Example THUMB Debug/APA102.o
-                0x08000734                APA_GetBufferSize
+                0x0800073c       0x2c STM32_Example THUMB Debug/APA102.o
+                0x0800073c                APA_Init
  .text.APA_sendBuffer
-                0x08000740       0x28 STM32_Example THUMB Debug/APA102.o
-                0x08000740                APA_sendBuffer
+                0x08000768       0x28 STM32_Example THUMB Debug/APA102.o
+                0x08000768                APA_sendBuffer
  .text.APA_SetPixel
-                0x08000768       0x9c STM32_Example THUMB Debug/APA102.o
-                0x08000768                APA_SetPixel
+                0x08000790       0x9c STM32_Example THUMB Debug/APA102.o
+                0x08000790                APA_SetPixel
  .text.APA_SetRange
-                0x08000804       0xd0 STM32_Example THUMB Debug/APA102.o
-                0x08000804                APA_SetRange
+                0x0800082c       0xd0 STM32_Example THUMB Debug/APA102.o
+                0x0800082c                APA_SetRange
  .text.APA_SetPixelHSV
-                0x080008d4       0x90 STM32_Example THUMB Debug/APA102.o
-                0x080008d4                APA_SetPixelHSV
+                0x080008fc       0x90 STM32_Example THUMB Debug/APA102.o
+                0x080008fc                APA_SetPixelHSV
  .text.APA_ConvHSVtoRGB
-                0x08000964      0x1b8 STM32_Example THUMB Debug/APA102.o
-                0x08000964                APA_ConvHSVtoRGB
+                0x0800098c      0x1b8 STM32_Example THUMB Debug/APA102.o
+                0x0800098c                APA_ConvHSVtoRGB
  .text.APA_HW_SPI_BlockSend
-                0x08000b1c       0x24 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
-                0x08000b1c                APA_HW_SPI_BlockSend
+                0x08000b44       0x24 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
+                0x08000b44                APA_HW_SPI_BlockSend
  .text.SystemInit
-                0x08000b40        0x4 STM32_Example THUMB Debug/system_stm32f1xx.o
-                0x08000b40                SystemInit
+                0x08000b68        0x4 STM32_Example THUMB Debug/system_stm32f1xx.o
+                0x08000b68                SystemInit
  .text.SystemCoreClockUpdate
-                0x08000b44       0xdc STM32_Example THUMB Debug/system_stm32f1xx.o
-                0x08000b44                SystemCoreClockUpdate
+                0x08000b6c       0xdc STM32_Example THUMB Debug/system_stm32f1xx.o
+                0x08000b6c                SystemCoreClockUpdate
  .text.HAL_Init
-                0x08000c20       0x28 STM32_Example THUMB Debug/stm32f1xx_hal.o
-                0x08000c20                HAL_Init
+                0x08000c48       0x28 STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x08000c48                HAL_Init
  .text.HAL_InitTick
-                0x08000c48       0x5c STM32_Example THUMB Debug/stm32f1xx_hal.o
-                0x08000c48                HAL_InitTick
+                0x08000c70       0x5c STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x08000c70                HAL_InitTick
  .text.HAL_IncTick
-                0x08000ca4       0x1c STM32_Example THUMB Debug/stm32f1xx_hal.o
-                0x08000ca4                HAL_IncTick
+                0x08000ccc       0x1c STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x08000ccc                HAL_IncTick
  .text.HAL_GetTick
-                0x08000cc0        0xc STM32_Example THUMB Debug/stm32f1xx_hal.o
-                0x08000cc0                HAL_GetTick
+                0x08000ce8        0xc STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x08000ce8                HAL_GetTick
  .text.HAL_Delay
-                0x08000ccc       0x44 STM32_Example THUMB Debug/stm32f1xx_hal.o
-                0x08000ccc                HAL_Delay
+                0x08000cf4       0x44 STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x08000cf4                HAL_Delay
  .text.__NVIC_SetPriorityGrouping
-                0x08000d10       0x40 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x08000d38       0x40 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
  .text.__NVIC_GetPriorityGrouping
-                0x08000d50       0x14 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x08000d78       0x14 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
  .text.__NVIC_SetPriority
-                0x08000d64       0x50 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x08000d8c       0x50 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
  .text.NVIC_EncodePriority
-                0x08000db4       0x62 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
- *fill*         0x08000e16        0x2 
+                0x08000ddc       0x62 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ *fill*         0x08000e3e        0x2 
  .text.SysTick_Config
-                0x08000e18       0x40 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x08000e40       0x40 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
  .text.HAL_NVIC_SetPriorityGrouping
-                0x08000e58       0x12 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
-                0x08000e58                HAL_NVIC_SetPriorityGrouping
+                0x08000e80       0x12 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x08000e80                HAL_NVIC_SetPriorityGrouping
  .text.HAL_NVIC_SetPriority
-                0x08000e6a       0x36 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
-                0x08000e6a                HAL_NVIC_SetPriority
+                0x08000e92       0x36 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x08000e92                HAL_NVIC_SetPriority
  .text.HAL_SYSTICK_Config
-                0x08000ea0       0x14 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
-                0x08000ea0                HAL_SYSTICK_Config
+                0x08000ec8       0x14 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x08000ec8                HAL_SYSTICK_Config
  .text.HAL_GPIO_Init
-                0x08000eb4      0x2f4 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
-                0x08000eb4                HAL_GPIO_Init
+                0x08000edc      0x2f4 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+                0x08000edc                HAL_GPIO_Init
  .text.HAL_RCC_OscConfig
-                0x080011a8      0x508 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
-                0x080011a8                HAL_RCC_OscConfig
+                0x080011d0      0x508 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x080011d0                HAL_RCC_OscConfig
  .text.HAL_RCC_ClockConfig
-                0x080016b0      0x1d0 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
-                0x080016b0                HAL_RCC_ClockConfig
+                0x080016d8      0x1d0 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x080016d8                HAL_RCC_ClockConfig
  .text.HAL_RCC_GetSysClockFreq
-                0x08001880       0xa0 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
-                0x08001880                HAL_RCC_GetSysClockFreq
+                0x080018a8       0xa0 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x080018a8                HAL_RCC_GetSysClockFreq
  .text.RCC_Delay
-                0x08001920       0x34 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x08001948       0x34 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
  .text.HAL_SPI_Init
-                0x08001954      0x104 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
-                0x08001954                HAL_SPI_Init
+                0x0800197c      0x104 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+                0x0800197c                HAL_SPI_Init
  .text.HAL_SPI_Transmit
-                0x08001a58      0x294 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
-                0x08001a58                HAL_SPI_Transmit
+                0x08001a80      0x294 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+                0x08001a80                HAL_SPI_Transmit
  .text.SPI_WaitFlagStateUntilTimeout
-                0x08001cec      0x110 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+                0x08001d14      0x110 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
  .text.SPI_EndRxTxTransaction
-                0x08001dfc       0x5e STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+                0x08001e24       0x5e STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
  .text.libc.memset
-                0x08001e5a       0x66 /usr/share/crossworks_for_arm_5.4/lib/libc_v7m_t_le_eabi.a(libc2_asm.o)
-                0x08001e5a                memset
-                0x08001ec0                        __text_end__ = (__text_start__ + SIZEOF (.text))
-                0x00001b7c                        __text_size__ = SIZEOF (.text)
-                0x08001ec0                        __text_load_end__ = __text_end__
+                0x08001e82       0x66 /usr/share/crossworks_for_arm_5.4/lib/libc_v7m_t_le_eabi.a(libc2_asm.o)
+                0x08001e82                memset
+                0x08001ee8                        __text_end__ = (__text_start__ + SIZEOF (.text))
+                0x00001ba4                        __text_size__ = SIZEOF (.text)
+                0x08001ee8                        __text_load_end__ = __text_end__
 
 .vfp11_veneer   0x00000000        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
@@ -4514,68 +4513,68 @@ Linker script and memory map
 .iplt           0x00000000        0x0
  .iplt          0x00000000        0x0 STM32_Example THUMB Debug/main.o
                 0x00000001                        . = ASSERT (((__text_start__ == __text_end__) || ((__text_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .text is too large to fit in FLASH memory segment)
-                0x08001ec0                        __dtors_load_start__ = ALIGN (__text_end__, 0x4)
+                0x08001ee8                        __dtors_load_start__ = ALIGN (__text_end__, 0x4)
 
-.dtors          0x08001ec0        0x0
-                0x08001ec0                        __dtors_start__ = .
+.dtors          0x08001ee8        0x0
+                0x08001ee8                        __dtors_start__ = .
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
  *(.fini_array)
  *(SORT_BY_NAME(.fini_array.*))
-                0x08001ec0                        __dtors_end__ = (__dtors_start__ + SIZEOF (.dtors))
+                0x08001ee8                        __dtors_end__ = (__dtors_start__ + SIZEOF (.dtors))
                 0x00000000                        __dtors_size__ = SIZEOF (.dtors)
-                0x08001ec0                        __dtors_load_end__ = __dtors_end__
+                0x08001ee8                        __dtors_load_end__ = __dtors_end__
                 0x00000001                        . = ASSERT (((__dtors_start__ == __dtors_end__) || ((__dtors_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .dtors is too large to fit in FLASH memory segment)
-                0x08001ec0                        __ctors_load_start__ = ALIGN (__dtors_end__, 0x4)
+                0x08001ee8                        __ctors_load_start__ = ALIGN (__dtors_end__, 0x4)
 
-.ctors          0x08001ec0        0x0
-                0x08001ec0                        __ctors_start__ = .
+.ctors          0x08001ee8        0x0
+                0x08001ee8                        __ctors_start__ = .
  *(SORT_BY_NAME(.ctors.*))
  *(.ctors)
  *(.init_array)
  *(SORT_BY_NAME(.init_array.*))
-                0x08001ec0                        __ctors_end__ = (__ctors_start__ + SIZEOF (.ctors))
+                0x08001ee8                        __ctors_end__ = (__ctors_start__ + SIZEOF (.ctors))
                 0x00000000                        __ctors_size__ = SIZEOF (.ctors)
-                0x08001ec0                        __ctors_load_end__ = __ctors_end__
+                0x08001ee8                        __ctors_load_end__ = __ctors_end__
                 0x00000001                        . = ASSERT (((__ctors_start__ == __ctors_end__) || ((__ctors_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .ctors is too large to fit in FLASH memory segment)
-                0x08001ec0                        __rodata_load_start__ = ALIGN (__ctors_end__, 0x4)
+                0x08001ee8                        __rodata_load_start__ = ALIGN (__ctors_end__, 0x4)
 
-.rodata         0x08001ec0       0x22
-                0x08001ec0                        __rodata_start__ = .
+.rodata         0x08001ee8       0x22
+                0x08001ee8                        __rodata_start__ = .
  *(.rodata .rodata.* .gnu.linkonce.r.* .data.rel.ro .data.rel.ro.*)
  .rodata.AHBPrescTable
-                0x08001ec0       0x10 STM32_Example THUMB Debug/system_stm32f1xx.o
-                0x08001ec0                AHBPrescTable
+                0x08001ee8       0x10 STM32_Example THUMB Debug/system_stm32f1xx.o
+                0x08001ee8                AHBPrescTable
  .rodata.aPLLMULFactorTable.1
-                0x08001ed0       0x10 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x08001ef8       0x10 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
  .rodata.aPredivFactorTable.0
-                0x08001ee0        0x2 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
-                0x08001ee2                        __rodata_end__ = (__rodata_start__ + SIZEOF (.rodata))
+                0x08001f08        0x2 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x08001f0a                        __rodata_end__ = (__rodata_start__ + SIZEOF (.rodata))
                 0x00000022                        __rodata_size__ = SIZEOF (.rodata)
-                0x08001ee2                        __rodata_load_end__ = __rodata_end__
+                0x08001f0a                        __rodata_load_end__ = __rodata_end__
 
 .rel.dyn        0x08000000        0x0
  .rel.iplt      0x08000000        0x0 STM32_Example THUMB Debug/main.o
                 0x00000001                        . = ASSERT (((__rodata_start__ == __rodata_end__) || ((__rodata_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .rodata is too large to fit in FLASH memory segment)
-                0x08001ee4                        __ARM.exidx_load_start__ = ALIGN (__rodata_end__, 0x4)
+                0x08001f0c                        __ARM.exidx_load_start__ = ALIGN (__rodata_end__, 0x4)
 
-.ARM.exidx      0x08001ee4        0x0
-                0x08001ee4                        __ARM.exidx_start__ = .
-                0x08001ee4                        __exidx_start = __ARM.exidx_start__
+.ARM.exidx      0x08001f0c        0x0
+                0x08001f0c                        __ARM.exidx_start__ = .
+                0x08001f0c                        __exidx_start = __ARM.exidx_start__
  *(.ARM.exidx .ARM.exidx.*)
-                0x08001ee4                        __ARM.exidx_end__ = (__ARM.exidx_start__ + SIZEOF (.ARM.exidx))
+                0x08001f0c                        __ARM.exidx_end__ = (__ARM.exidx_start__ + SIZEOF (.ARM.exidx))
                 0x00000000                        __ARM.exidx_size__ = SIZEOF (.ARM.exidx)
-                0x08001ee4                        __exidx_end = __ARM.exidx_end__
-                0x08001ee4                        __ARM.exidx_load_end__ = __ARM.exidx_end__
+                0x08001f0c                        __exidx_end = __ARM.exidx_end__
+                0x08001f0c                        __ARM.exidx_load_end__ = __ARM.exidx_end__
                 0x00000001                        . = ASSERT (((__ARM.exidx_start__ == __ARM.exidx_end__) || ((__ARM.exidx_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .ARM.exidx is too large to fit in FLASH memory segment)
-                0x08001ee4                        __fast_load_start__ = ALIGN (__ARM.exidx_end__, 0x4)
+                0x08001f0c                        __fast_load_start__ = ALIGN (__ARM.exidx_end__, 0x4)
 
-.fast           0x20000000        0x0 load address 0x08001ee4
+.fast           0x20000000        0x0 load address 0x08001f0c
                 0x20000000                        __fast_start__ = .
  *(.fast .fast.*)
                 0x20000000                        __fast_end__ = (__fast_start__ + SIZEOF (.fast))
                 0x00000000                        __fast_size__ = SIZEOF (.fast)
-                0x08001ee4                        __fast_load_end__ = (__fast_load_start__ + SIZEOF (.fast))
+                0x08001f0c                        __fast_load_end__ = (__fast_load_start__ + SIZEOF (.fast))
                 0x00000001                        . = ASSERT (((__fast_load_start__ == __fast_load_end__) || ((__fast_load_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .fast is too large to fit in FLASH memory segment)
 
 .fast_run       0x20000000        0x0
@@ -4584,28 +4583,26 @@ Linker script and memory map
                 0x00000000                        __fast_run_size__ = (__fast_run_end__ - __fast_run_start__)
                 0x20000000                        __fast_run_load_end__ = __fast_run_end__
                 0x00000001                        . = ASSERT (((__fast_run_start__ == __fast_run_end__) || ((__fast_run_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .fast_run is too large to fit in RAM memory segment)
-                0x08001ee4                        __data_load_start__ = ALIGN ((__fast_load_start__ + SIZEOF (.fast)), 0x4)
+                0x08001f0c                        __data_load_start__ = ALIGN ((__fast_load_start__ + SIZEOF (.fast)), 0x4)
 
-.data           0x20000000       0x11 load address 0x08001ee4
+.data           0x20000000        0xd load address 0x08001f0c
                 0x20000000                        __data_start__ = .
  *(.data .data.* .gnu.linkonce.d.*)
  .data.led_count
                 0x20000000        0x2 STM32_Example THUMB Debug/APA102.o
  *fill*         0x20000002        0x2 
- .data.stopSignal
-                0x20000004        0x4 STM32_Example THUMB Debug/APA102.o
  .data.SystemCoreClock
-                0x20000008        0x4 STM32_Example THUMB Debug/system_stm32f1xx.o
-                0x20000008                SystemCoreClock
+                0x20000004        0x4 STM32_Example THUMB Debug/system_stm32f1xx.o
+                0x20000004                SystemCoreClock
  .data.uwTickPrio
-                0x2000000c        0x4 STM32_Example THUMB Debug/stm32f1xx_hal.o
-                0x2000000c                uwTickPrio
+                0x20000008        0x4 STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x20000008                uwTickPrio
  .data.uwTickFreq
-                0x20000010        0x1 STM32_Example THUMB Debug/stm32f1xx_hal.o
-                0x20000010                uwTickFreq
-                0x20000011                        __data_end__ = (__data_start__ + SIZEOF (.data))
-                0x00000011                        __data_size__ = SIZEOF (.data)
-                0x08001ef5                        __data_load_end__ = (__data_load_start__ + SIZEOF (.data))
+                0x2000000c        0x1 STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x2000000c                uwTickFreq
+                0x2000000d                        __data_end__ = (__data_start__ + SIZEOF (.data))
+                0x0000000d                        __data_size__ = SIZEOF (.data)
+                0x08001f19                        __data_load_end__ = (__data_load_start__ + SIZEOF (.data))
 
 .igot.plt       0x00000000        0x0
  .igot.plt      0x00000000        0x0 STM32_Example THUMB Debug/main.o
@@ -4613,26 +4610,29 @@ Linker script and memory map
 
 .data_run       0x20000000        0x0
                 0x20000000                        __data_run_start__ = .
-                0x20000011                        __data_run_end__ = (__data_run_start__ + SIZEOF (.data))
-                0x00000011                        __data_run_size__ = (__data_run_end__ - __data_run_start__)
-                0x20000011                        __data_run_load_end__ = __data_run_end__
+                0x2000000d                        __data_run_end__ = (__data_run_start__ + SIZEOF (.data))
+                0x0000000d                        __data_run_size__ = (__data_run_end__ - __data_run_start__)
+                0x2000000d                        __data_run_load_end__ = __data_run_end__
                 0x00000001                        . = ASSERT (((__data_run_start__ == __data_run_end__) || ((__data_run_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .data_run is too large to fit in RAM memory segment)
-                0x20000014                        __bss_load_start__ = ALIGN (__data_run_end__, 0x4)
+                0x20000010                        __bss_load_start__ = ALIGN (__data_run_end__, 0x4)
 
-.bss            0x20000014       0xd8
-                0x20000014                        __bss_start__ = .
+.bss            0x20000010       0xdc
+                0x20000010                        __bss_start__ = .
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss.hspi1     0x20000014       0x58 STM32_Example THUMB Debug/main.o
-                0x20000014                hspi1
+ .bss.hspi1     0x20000010       0x58 STM32_Example THUMB Debug/main.o
+                0x20000010                hspi1
  .bss.led_buffer
-                0x2000006c       0x78 STM32_Example THUMB Debug/APA102.o
+                0x20000068       0x78 STM32_Example THUMB Debug/APA102.o
  .bss.startSignal
-                0x200000e4        0x4 STM32_Example THUMB Debug/APA102.o
+                0x200000e0        0x4 STM32_Example THUMB Debug/APA102.o
+ .bss.stopSignal
+                0x200000e4        0x1 STM32_Example THUMB Debug/APA102.o
+ *fill*         0x200000e5        0x3 
  .bss.uwTick    0x200000e8        0x4 STM32_Example THUMB Debug/stm32f1xx_hal.o
                 0x200000e8                uwTick
  *(COMMON)
                 0x200000ec                        __bss_end__ = (__bss_start__ + SIZEOF (.bss))
-                0x000000d8                        __bss_size__ = SIZEOF (.bss)
+                0x000000dc                        __bss_size__ = SIZEOF (.bss)
                 0x200000ec                        __bss_load_end__ = __bss_end__
                 0x00000001                        . = ASSERT (((__bss_start__ == __bss_end__) || ((__bss_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .bss is too large to fit in RAM memory segment)
                 0x200000ec                        __tbss_load_start__ = ALIGN (__bss_end__, 0x4)
@@ -4644,16 +4644,16 @@ Linker script and memory map
                 0x00000000                        __tbss_size__ = SIZEOF (.tbss)
                 0x200000ec                        __tbss_load_end__ = __tbss_end__
                 0x00000001                        . = ASSERT (((__tbss_start__ == __tbss_end__) || ((__tbss_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .tbss is too large to fit in RAM memory segment)
-                0x08001ef8                        __tdata_load_start__ = ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4)
+                0x08001f1c                        __tdata_load_start__ = ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4)
 
-.tdata          0x200000ec        0x0 load address 0x08001ef8
+.tdata          0x200000ec        0x0 load address 0x08001f1c
                 0x200000ec                        __tdata_start__ = .
  *(.tdata .tdata.*)
                 0x200000ec                        __tdata_end__ = (__tdata_start__ + SIZEOF (.tdata))
                 0x00000000                        __tdata_size__ = SIZEOF (.tdata)
-                0x08001ef8                        __tdata_load_end__ = (__tdata_load_start__ + SIZEOF (.tdata))
-                0x08001ef8                        __FLASH_segment_used_end__ = (ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4) + SIZEOF (.tdata))
-                0x00001ef8                        __FLASH_segment_used_size__ = (__FLASH_segment_used_end__ - __FLASH_segment_start__)
+                0x08001f1c                        __tdata_load_end__ = (__tdata_load_start__ + SIZEOF (.tdata))
+                0x08001f1c                        __FLASH_segment_used_end__ = (ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4) + SIZEOF (.tdata))
+                0x00001f1c                        __FLASH_segment_used_size__ = (__FLASH_segment_used_end__ - __FLASH_segment_start__)
                 0x00000001                        . = ASSERT (((__tdata_load_start__ == __tdata_load_end__) || ((__tdata_load_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .tdata is too large to fit in FLASH memory segment)
 
 .tdata_run      0x200000ec        0x0
@@ -4760,60 +4760,60 @@ END GROUP
 OUTPUT(/home/jennifer/repos/APA102_LED_Driver/Test-Projects/STM32_Example/EWARM/STM32_Example THUMB Debug/STM32_Example.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000     0x5f80
- .debug_info    0x00000000      0xeda STM32_Example THUMB Debug/main.o
- .debug_info    0x00000eda      0x89c STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
- .debug_info    0x00001776      0x122 STM32_Example THUMB Debug/stm32f1xx_it.o
- .debug_info    0x00001898      0x7ed STM32_Example THUMB Debug/APA102.o
- .debug_info    0x00002085      0x60a STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
- .debug_info    0x0000268f      0x225 STM32_Example THUMB Debug/system_stm32f1xx.o
- .debug_info    0x000028b4      0x78e STM32_Example THUMB Debug/stm32f1xx_hal.o
- .debug_info    0x00003042      0xb62 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
- .debug_info    0x00003ba4      0x5fd STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
- .debug_info    0x000041a1      0x841 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
- .debug_info    0x000049e2     0x1558 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
- .debug_info    0x00005f3a       0x24 STM32_Example THUMB Debug/STM32_Startup.o
- .debug_info    0x00005f5e       0x22 STM32_Example THUMB Debug/thumb_crt0.o
+.debug_info     0x00000000     0x5f9b
+ .debug_info    0x00000000      0xef4 STM32_Example THUMB Debug/main.o
+ .debug_info    0x00000ef4      0x89c STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+ .debug_info    0x00001790      0x122 STM32_Example THUMB Debug/stm32f1xx_it.o
+ .debug_info    0x000018b2      0x7ee STM32_Example THUMB Debug/APA102.o
+ .debug_info    0x000020a0      0x60a STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
+ .debug_info    0x000026aa      0x225 STM32_Example THUMB Debug/system_stm32f1xx.o
+ .debug_info    0x000028cf      0x78e STM32_Example THUMB Debug/stm32f1xx_hal.o
+ .debug_info    0x0000305d      0xb62 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ .debug_info    0x00003bbf      0x5fd STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+ .debug_info    0x000041bc      0x841 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+ .debug_info    0x000049fd     0x1558 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+ .debug_info    0x00005f55       0x24 STM32_Example THUMB Debug/STM32_Startup.o
+ .debug_info    0x00005f79       0x22 STM32_Example THUMB Debug/thumb_crt0.o
 
-.debug_abbrev   0x00000000     0x15fd
- .debug_abbrev  0x00000000      0x329 STM32_Example THUMB Debug/main.o
- .debug_abbrev  0x00000329      0x19e STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
- .debug_abbrev  0x000004c7       0x77 STM32_Example THUMB Debug/stm32f1xx_it.o
- .debug_abbrev  0x0000053e      0x23b STM32_Example THUMB Debug/APA102.o
- .debug_abbrev  0x00000779      0x160 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
- .debug_abbrev  0x000008d9      0x13e STM32_Example THUMB Debug/system_stm32f1xx.o
- .debug_abbrev  0x00000a17      0x1fe STM32_Example THUMB Debug/stm32f1xx_hal.o
- .debug_abbrev  0x00000c15      0x2f0 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
- .debug_abbrev  0x00000f05      0x1be STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
- .debug_abbrev  0x000010c3      0x2ab STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
- .debug_abbrev  0x0000136e      0x269 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
- .debug_abbrev  0x000015d7       0x14 STM32_Example THUMB Debug/STM32_Startup.o
- .debug_abbrev  0x000015eb       0x12 STM32_Example THUMB Debug/thumb_crt0.o
+.debug_abbrev   0x00000000     0x15e8
+ .debug_abbrev  0x00000000      0x314 STM32_Example THUMB Debug/main.o
+ .debug_abbrev  0x00000314      0x19e STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+ .debug_abbrev  0x000004b2       0x77 STM32_Example THUMB Debug/stm32f1xx_it.o
+ .debug_abbrev  0x00000529      0x23b STM32_Example THUMB Debug/APA102.o
+ .debug_abbrev  0x00000764      0x160 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
+ .debug_abbrev  0x000008c4      0x13e STM32_Example THUMB Debug/system_stm32f1xx.o
+ .debug_abbrev  0x00000a02      0x1fe STM32_Example THUMB Debug/stm32f1xx_hal.o
+ .debug_abbrev  0x00000c00      0x2f0 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ .debug_abbrev  0x00000ef0      0x1be STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+ .debug_abbrev  0x000010ae      0x2ab STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+ .debug_abbrev  0x00001359      0x269 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+ .debug_abbrev  0x000015c2       0x14 STM32_Example THUMB Debug/STM32_Startup.o
+ .debug_abbrev  0x000015d6       0x12 STM32_Example THUMB Debug/thumb_crt0.o
 
 .debug_pubnames
-                0x00000000     0x247e
+                0x00000000     0x2467
  .debug_pubnames
-                0x00000000      0x677 STM32_Example THUMB Debug/main.o
+                0x00000000      0x661 STM32_Example THUMB Debug/main.o
  .debug_pubnames
-                0x00000677       0x72 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+                0x00000661       0x72 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
  .debug_pubnames
-                0x000006e9       0xd6 STM32_Example THUMB Debug/stm32f1xx_it.o
+                0x000006d3       0xd6 STM32_Example THUMB Debug/stm32f1xx_it.o
  .debug_pubnames
-                0x000007bf      0x221 STM32_Example THUMB Debug/APA102.o
+                0x000007a9      0x220 STM32_Example THUMB Debug/APA102.o
  .debug_pubnames
-                0x000009e0       0x40 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
+                0x000009c9       0x40 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
  .debug_pubnames
-                0x00000a20       0x85 STM32_Example THUMB Debug/system_stm32f1xx.o
+                0x00000a09       0x85 STM32_Example THUMB Debug/system_stm32f1xx.o
  .debug_pubnames
-                0x00000aa5      0x816 STM32_Example THUMB Debug/stm32f1xx_hal.o
+                0x00000a8e      0x816 STM32_Example THUMB Debug/stm32f1xx_hal.o
  .debug_pubnames
-                0x000012bb      0x7d7 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+                0x000012a4      0x7d7 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
  .debug_pubnames
-                0x00001a92      0x121 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+                0x00001a7b      0x121 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
  .debug_pubnames
-                0x00001bb3      0x203 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+                0x00001b9c      0x203 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
  .debug_pubnames
-                0x00001db6      0x6c8 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+                0x00001d9f      0x6c8 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
 
 .debug_pubtypes
                 0x00000000     0x1158
@@ -4932,47 +4932,47 @@ LOAD linker stubs
  .debug_macro   0x000179a9      0x166 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
  .debug_macro   0x00017b0f      0x15c STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
 
-.debug_line     0x00000000     0x5577
- .debug_line    0x00000000      0x550 STM32_Example THUMB Debug/main.o
- .debug_line    0x00000550      0x3e8 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
- .debug_line    0x00000938      0x44c STM32_Example THUMB Debug/stm32f1xx_it.o
- .debug_line    0x00000d84      0x481 STM32_Example THUMB Debug/APA102.o
- .debug_line    0x00001205      0x39d STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
- .debug_line    0x000015a2      0x41c STM32_Example THUMB Debug/system_stm32f1xx.o
- .debug_line    0x000019be      0x64d STM32_Example THUMB Debug/stm32f1xx_hal.o
- .debug_line    0x0000200b      0x846 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
- .debug_line    0x00002851      0x6af STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
- .debug_line    0x00002f00      0xb0c STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
- .debug_line    0x00003a0c     0x18e4 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
- .debug_line    0x000052f0      0x10a STM32_Example THUMB Debug/STM32_Startup.o
- .debug_line    0x000053fa      0x17d STM32_Example THUMB Debug/thumb_crt0.o
+.debug_line     0x00000000     0x5581
+ .debug_line    0x00000000      0x54d STM32_Example THUMB Debug/main.o
+ .debug_line    0x0000054d      0x3e8 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+ .debug_line    0x00000935      0x44c STM32_Example THUMB Debug/stm32f1xx_it.o
+ .debug_line    0x00000d81      0x48e STM32_Example THUMB Debug/APA102.o
+ .debug_line    0x0000120f      0x39d STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
+ .debug_line    0x000015ac      0x41c STM32_Example THUMB Debug/system_stm32f1xx.o
+ .debug_line    0x000019c8      0x64d STM32_Example THUMB Debug/stm32f1xx_hal.o
+ .debug_line    0x00002015      0x846 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ .debug_line    0x0000285b      0x6af STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+ .debug_line    0x00002f0a      0xb0c STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+ .debug_line    0x00003a16     0x18e4 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+ .debug_line    0x000052fa      0x10a STM32_Example THUMB Debug/STM32_Startup.o
+ .debug_line    0x00005404      0x17d STM32_Example THUMB Debug/thumb_crt0.o
 
-.debug_str      0x00000000    0x8c579
- .debug_str     0x00000000    0x8c579 STM32_Example THUMB Debug/main.o
-                              0x8ab09 (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
+.debug_str      0x00000000    0x8c577
+ .debug_str     0x00000000    0x8c577 STM32_Example THUMB Debug/main.o
+                              0x8aaf7 (size before relaxing)
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_msp.o
                               0x8a11b (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/stm32f1xx_it.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/stm32f1xx_it.o
                               0x89cef (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/APA102.o
-                               0x4109 (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/APA102.o
+                               0x4107 (size before relaxing)
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/APA102_hw_stm32_hal.o
                               0x8a0c6 (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/system_stm32f1xx.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/system_stm32f1xx.o
                               0x89c9c (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/stm32f1xx_hal.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/stm32f1xx_hal.o
                               0x8a4bd (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_cortex.o
                               0x8a3f5 (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_gpio.o
                               0x8a021 (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_rcc.o
                               0x8a0c0 (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/stm32f1xx_hal_spi.o
                               0x8a5bd (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/STM32_Startup.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/STM32_Startup.o
                                  0xbe (size before relaxing)
- .debug_str     0x0008c579        0x0 STM32_Example THUMB Debug/thumb_crt0.o
+ .debug_str     0x0008c577        0x0 STM32_Example THUMB Debug/thumb_crt0.o
                                  0x8d (size before relaxing)
 
 .comment        0x00000000       0x3d
