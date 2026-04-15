@@ -12,6 +12,7 @@ The format is based on Keep a Changelog.
   - `APA_GetBufferSize(void)`
 - New status code `APA_invalid_config` for invalid runtime configuration requests.
 - RP2040/Pico SDK reference project under `Test-Projects/Pico_Example/` that builds against the local repository copies of `APA102.c` and `APA102_hw_rp2040_pico.c`.
+- Optional RP2040 DMA-backed LED payload transfer via `APA102_PICO_USE_DMA_BUFFER_SEND`.
 
 ### Changed
 - Core driver now applies runtime LED count for:
@@ -20,6 +21,7 @@ The format is based on Keep a Changelog.
   - Number of bytes sent in `APA_sendBuffer()`
   - Full-strip operations in `APA_Init()` and `APA_Clear()`
 - `MAX_LED` now resolves from runtime count (`APA_GetBufferSize() - 1`).
+- Core driver now routes the main LED-frame payload through `APA_HW_SPI_SendBuffer()` so backends can specialize bulk transfers without affecting start/end framing.
 - Documentation updated for runtime-size workflows and backend split integration.
 
 ### Fixed

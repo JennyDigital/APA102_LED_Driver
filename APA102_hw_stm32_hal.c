@@ -9,3 +9,8 @@ void APA_HW_SPI_BlockSend( uint8_t * data, uint16_t length )
 {
   APA102_STM32_SPI_TX( data, length );
 }
+
+void APA_HW_SPI_SendBuffer( uint8_t * data, uint16_t length )
+{
+  APA_HW_SPI_BlockSend( data, length );
+}

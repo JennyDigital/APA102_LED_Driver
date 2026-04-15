@@ -16,3 +16,8 @@ void APA_HW_SPI_BlockSend( uint8_t * data, uint16_t length )
     while( spi_i2s_flag_get( LED_SPI_PORT, SPI_FLAG_TBE ) == RESET );
   }
 }
+
+void APA_HW_SPI_SendBuffer( uint8_t * data, uint16_t length )
+{
+  APA_HW_SPI_BlockSend( data, length );
+}

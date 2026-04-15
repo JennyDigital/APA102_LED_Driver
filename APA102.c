@@ -172,7 +172,7 @@ uint16_t APA_GetBufferSize( void )
 void APA_sendBuffer( void )
 {
   sendStart();
-  APA_HW_SPI_BlockSend( &led_buffer[0].master_bright, led_count * sizeof( led_frame_st ) );
+  APA_HW_SPI_SendBuffer( &led_buffer[0].master_bright, led_count * sizeof( led_frame_st ) );
   sendStop();
 }
 

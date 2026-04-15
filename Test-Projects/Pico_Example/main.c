@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
+#define APA102_PICO_EXAMPLE_USE_DMA
+#define APA102_PICO_USE_DMA_BUFFER_SEND
+
 #include "APA102_hw_rp2040_pico.h"
 #include "APA102.h"
 

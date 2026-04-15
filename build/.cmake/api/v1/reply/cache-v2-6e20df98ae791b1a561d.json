@@ -2,6 +2,18 @@
 	"entries" : 
 	[
 		{
+			"name" : "APA102_PICO_EXAMPLE_USE_DMA",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Enable DMA-backed APA102 frame transfer"
+				}
+			],
+			"type" : "BOOL",
+			"value" : "OFF"
+		},
+		{
 			"name" : "CMAKE_ADDR2LINE",
 			"properties" : 
 			[

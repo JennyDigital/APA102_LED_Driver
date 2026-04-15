@@ -76,7 +76,7 @@ The APA102 (also known as DotStar) LED has the following protocol:
 |----------|---------|-------|
 | **STM32** | HAL | Tested with STM32F1 series |
 | **GD32** | SPL | Tested with GD32F10x series |
-| **RP2040 (Pico)** | Pico SDK | Uses `hardware/spi.h` (`spi_write_blocking`) |
+| **RP2040 (Pico)** | Pico SDK | Uses `hardware/spi.h` (`spi_write_blocking`), with optional DMA bulk transfer |
 | **SPI Speed** | ≤10MHz | Essential for reliable communication |
 
 ### 🔌 Wiring Diagram
@@ -165,6 +165,16 @@ For RP2040, `spi0` is used by default. To use `spi1`:
 #include "APA102_hw_rp2040_pico.h"
 #include "APA102.h"
 ```
+
+To enable DMA for the main LED payload transfer on RP2040, define `APA102_PICO_USE_DMA_BUFFER_SEND` before including the Pico backend header, or add it as a compile definition:
+
+```c
+#define APA102_PICO_USE_DMA_BUFFER_SEND
+#include "APA102_hw_rp2040_pico.h"
+#include "APA102.h"
+```
+
+When DMA is enabled, link against `hardware_dma` in addition to `hardware_spi`. The Pico backend will keep the 4-byte start frame and end-frame tail clocks on the normal blocking path, and only the LED payload buffer is transferred via DMA.
 
 #### 🎮 GD32 SPI Peripheral Setup
 

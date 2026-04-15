@@ -85,13 +85,13 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Twice a Second">
-   <Watchpoint expression="stopSignal" name="stopSignal" radix="-1" linenumber="48" filename="main.c"/>
-   <Watchpoint expression="length" name="length" radix="10" linenumber="45" filename="main.c"/>
+   <Watchpoint expression="stopSignal" name="stopSignal" radix="-1" linenumber="43" filename="main.c"/>
+   <Watchpoint expression="length" name="length" radix="10" linenumber="40" filename="main.c"/>
    <Watchpoint expression="i" name="i" radix="10" linenumber="0" filename="../Twinkler"/>
    <Watchpoint expression="j" name="j" radix="10" linenumber="0" filename="../Twinkler"/>
-   <Watchpoint expression="led_buffer" name="led_buffer" radix="-1" linenumber="46" filename="main.c"/>
-   <Watchpoint expression="value" name="value" radix="16" linenumber="47" filename="main.c"/>
-   <Watchpoint expression="count" name="count" radix="10" linenumber="45" filename="main.c"/>
+   <Watchpoint expression="led_buffer" name="led_buffer" radix="-1" linenumber="41" filename="main.c"/>
+   <Watchpoint expression="value" name="value" radix="16" linenumber="42" filename="main.c"/>
+   <Watchpoint expression="count" name="count" radix="10" linenumber="40" filename="main.c"/>
    <Watchpoint expression="fetched" name="fetched" radix="10" linenumber="0" filename="../Twinkler"/>
   </Watches>
  </Watch1>
@@ -105,7 +105,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="3" y="22" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="7" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="14" y="3" useTextEdit="1" path="main.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="149" useTextEdit="1" path="../../APA102.c" left="0" top="147" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="90" useTextEdit="1" path="../../APA102.h" left="0" top="77" codecName="Default"/>

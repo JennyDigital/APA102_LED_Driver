@@ -26,6 +26,8 @@ project(Pico_APA102_Example C CXX ASM)
 
 pico_sdk_init()
 
+option(APA102_PICO_EXAMPLE_USE_DMA "Enable DMA-backed APA102 frame transfer" OFF)
+
 add_executable(Pico_APA102_Example
     main.c
     ../../APA102.c
@@ -42,6 +44,11 @@ target_link_libraries(Pico_APA102_Example
     pico_stdlib
     hardware_spi
 )
+
+if(APA102_PICO_EXAMPLE_USE_DMA)
+    target_compile_definitions(Pico_APA102_Example PRIVATE APA102_PICO_USE_DMA_BUFFER_SEND)
+    target_link_libraries(Pico_APA102_Example hardware_dma)
+endif()
 
 target_include_directories(Pico_APA102_Example PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}

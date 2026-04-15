@@ -4,5 +4,6 @@
 #include <stdint.h>
 
 void APA_HW_SPI_BlockSend( uint8_t * data, uint16_t length );
+void APA_HW_SPI_SendBuffer( uint8_t * data, uint16_t length );
 
 #endif // APA102_HW_BACKEND_H
